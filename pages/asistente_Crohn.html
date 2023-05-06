@@ -3,9 +3,25 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Asistente Crohn - Alberto Ruiz</title>
+    <title>Asistente Crohn</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../css/styles.css">
+    <!-- Agregamos jQuery -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css" />
+    <!-- Agregamos el script para inicializar el carrusel -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.carousel').slick({
+                dots: true,
+                infinite: true,
+                speed: 500,
+                fade: true,
+                cssEase: 'linear'
+            });
+        });
+    </script>
+
 </head>
 
 <body>
@@ -20,47 +36,57 @@
     </header>
     <main>
         <section id="presentation">
-            <h1>Asistente Crohn</h1>
-            <p>Asistente Crohn es una aplicación móvil para pacientes con enfermedad de Crohn y colitis ulcerosa. La
-                aplicación proporciona herramientas útiles para el seguimiento y gestión de la enfermedad, así como
-                recursos para mejorar la calidad de vida de los pacientes.</p>
+            <h1>Crohn’s Assistant</h1>
+            <p>Crohn’s Assistant is a mobile application for people who suffer from Crohn’s inflammatory bowel disease.
+                The main objective of the application is to automatically identify and alert the appearance of a
+                possible outbreak of the disease based on certain sets of symptoms referred by specialists. In addition,
+                it provides the user with an orientative access to reference recommendations on disease management,
+                endorsed by medical societies.</p>
         </section>
         <section>
-            <h2>Recursos</h2>
-            <p>Visita nuestro perfil en Linktree para acceder a recursos y enlaces útiles:</p>
+            <h2>Resources</h2>
+            <p>Check out the Linktree profile to access useful resources and links.</p>
             <a href="https://linktr.ee/asistentecrohn">https://linktr.ee/asistentecrohn</a>
         </section>
         <section>
-            <h2>Logros de prensa</h2>
-            <p>Asistente Crohn ha sido destacada en diversos medios de comunicación, incluyendo:</p>
-            <ul>
-                <li>El País</li>
-                <li>El Mundo</li>
-                <li>ABC</li>
-            </ul>
+            <h2>Outbreaks</h2>
+            <p>This is a post about my participation in the IV Health and Wellness Fair called Pontesán in Galicia. This
+                year’s focus was on nutrition and fighting obesity and it had over 40 non-profit entities participating.
+                I had the honor of presenting my mobile application called Crohn’s Assistant which helps patients manage
+                their Crohn’s inflammatory bowel disease more effectively and improve their quality of life. The app has
+                been very well received and has received a lot of positive feedback since its launch 10 months ago, with
+                a total of 450 downloads to date.</p>
+            <div class="carousel">
+                <div><img src="../assets/pontesan_1.jpg"></div>
+                <div><img src="../assets/pontesan_2.jpg"></div>
+                <div><img src="../assets/pontesan_3.jpg"></div>
+                <div><img src="../assets/pontesan_4.jpg"></div>
+            </div>
         </section>
         <section>
-            <h2>Primera versión de la aplicación</h2>
-            <p>La primera versión de Asistente Crohn se lanzó en 2020. Incluía las siguientes funcionalidades:</p>
+            <h2>First version of the application</h2>
+            <p>The first version of Crohn’s Assistant was launched in June 2022. It included the following features:</p>
             <ul>
-                <li>Registro y seguimiento de síntomas y medicación.</li>
-                <li>Calendario de citas médicas.</li>
-                <li>Recursos de información y apoyo para pacientes.</li>
+                <li>Symptom and medication tracking and registration.</li>
+                <li>Medical appointment calendar.</li>
+                <li>Information and support resources for patients.</li>
             </ul>
-            <img src="../assets/APP_v1.0.png" alt="Capturas de pantalla de la primera versión de Asistente Crohn">
+            <img src="../assets/APP_v1.0.png" alt="Screenshot of the first version of Crohn’s Assistant.">
         </section>
         <section>
-            <h2>Versión en desarrollo</h2>
-            <p>Actualmente estamos trabajando en la siguiente versión de Asistente Crohn, que incluirá las siguientes
-                mejoras:</p>
+            <h2>In development version</h2>
+            <p>I am currently working on the next version of Crohn’s Assistant, which will include the following
+                improvements:</p>
             <ul>
-                <li>Nuevos módulos y diseño renovado.</li>
-                <li>Recomendaciones personalizadas basadas en los datos recogidos.</li>
-                <li>Acceso a tus registros por parte de tu Unidad EII.</li>
+                <li>New modules and a renewed design.</li>
+                <li>Personalized recommendations based on collected data.</li>
+                <li>Access to your records by your IBD Unit.</li>
             </ul>
-            <img src="../assets/APP_v2.0_1.png" alt="Capturas de pantalla de la versión en desarrollo de Asistente Crohn">
+            <img src="../assets/APP_v2.0_1.png"
+                alt="Screenshot of the in development version of Crohn’s Assistant.">
             <br>
-            <img src="../assets/APP_v2.0_2.png" alt="Capturas de pantalla de la versión en desarrollo de Asistente Crohn">
+            <img src="../assets/APP_v2.0_2.png"
+                alt="Screenshot of the in development version of Crohn’s Assistant">
         </section>
     </main>
 

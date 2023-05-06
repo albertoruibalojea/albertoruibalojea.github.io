@@ -129,6 +129,16 @@ footer p {
 
 
 /* asistente_crohn.html */
+.carousel {
+  max-width: 200px;
+  margin: 0 auto;
+}
+
+.carousel img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
 
 
 
