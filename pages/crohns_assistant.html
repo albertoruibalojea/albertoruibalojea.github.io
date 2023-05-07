@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Asistente Crohn</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <style>
+        .mySlides {
+            display: none;
+        }
+    </style>
+
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="../index.html">Landing page</a></li>
+                <li><a href="#">Crohn´s Assistant</a></li>
+                <li><a href="contact.html" class="active">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="presentation">
+            <h1>Crohn’s Assistant</h1>
+            <p>Crohn’s Assistant is a mobile application for people who suffer from Crohn’s inflammatory bowel disease.
+                The main objective of the application is to automatically identify and alert the appearance of a
+                possible outbreak of the disease based on certain sets of symptoms referred by specialists. In addition,
+                it provides the user with an orientative access to reference recommendations on disease management,
+                endorsed by medical societies.</p>
+        </section>
+        <section>
+            <h2>Resources</h2>
+            <p>Check out the Linktree profile to access useful resources and links.</p>
+            <a href="https://linktr.ee/asistentecrohn">https://linktr.ee/asistentecrohn</a>
+        </section>
+        <section>
+            <h2>Outbreaks</h2>
+            <p>This is a post about my participation in the IV Health and Wellness Fair called Pontesán in Galicia. This
+                year’s focus was on nutrition and fighting obesity and it had over 40 non-profit entities participating.
+                I had the honor of presenting my mobile application called Crohn’s Assistant which helps patients manage
+                their Crohn’s inflammatory bowel disease more effectively and improve their quality of life. The app has
+                been very well received and has received a lot of positive feedback since its launch 10 months ago, with
+                a total of 450 downloads to date (May 2023).</p>
+            <div class="w3-content w3-display-container">
+                <img class="mySlides" src="../assets/pontesan_1.png" alt="" style="width:100%">
+                <img class="mySlides" src="../assets/pontesan_3.png" alt="" style="width:100%">
+                <img class="mySlides" src="../assets/pontesan_2.png" alt="" style="width:100%">
+                <img class="mySlides" src="../assets/pontesan_4.jpg" alt="" style="width:100%">
+
+                <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
+                <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
+            </div>
+        </section>
+        <section>
+            <h2>First version of the application</h2>
+            <p>The first version of Crohn’s Assistant was launched in June 2022. It included the following features:</p>
+            <ul>
+                <li>Symptom and medication tracking and registration.</li>
+                <li>Medical appointment calendar.</li>
+                <li>Information and support resources for patients.</li>
+            </ul>
+            <img src="../assets/APP_v1.0.png" alt="Screenshot of the first version of Crohn’s Assistant.">
+        </section>
+        <section>
+            <h2>In development version</h2>
+            <p>I am currently working on the next version of Crohn’s Assistant, which will include the following
+                improvements. As far from today (May 2023), I am finishing a public API of the new version. You can check it out at my GitHub.</p>
+            <ul>
+                <li>New modules and a renewed design.</li>
+                <li>Personalized recommendations based on collected data.</li>
+                <li>Access to your records by your IBD Unit.</li>
+            </ul>
+            <div>
+                <img src="../assets/APP_v2.0_1.png" style="width:100%" alt="Screenshot of the in development version of Crohn’s Assistant.">
+                <br>
+                <img src="../assets/APP_v2.0_2.png" style="width:100%" alt="Screenshot of the in development version of Crohn’s Assistant">
+            </div>
+        </section>
+    </main>
+
+    <script>
+        var slideIndex = 1;
+        showDivs(slideIndex);
+
+        function plusDivs(n) {
+            showDivs(slideIndex += n);
+        }
+
+        function showDivs(n) {
+            var i;
+            var x = document.getElementsByClassName("mySlides");
+            if (n > x.length) { slideIndex = 1 }
+            if (n < 1) { slideIndex = x.length }
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+            }
+            x[slideIndex - 1].style.display = "block";
+        }
+    </script>
+
+    <footer>
+        <p>GNU General Public License v3.0 &copy; 2023 - Alberto Ruibal Ojea</p>
+    </footer>
+</body>
+
+</html>
