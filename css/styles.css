@@ -18,6 +18,8 @@ body {
 a {
   color: #333;
   text-decoration: none;
+  font-size: 1.2rem;
+  margin: 10px;
 }
 
 ul {
@@ -129,16 +131,25 @@ footer p {
 
 
 /* asistente_crohn.html */
-.carousel {
-  max-width: 200px;
-  margin: 0 auto;
+.superslider{
+  max-width:400px;
+  margin:0 auto;
+  text-align:center;
+  position:relative;
+  margin:0;
+  padding:0;
+}
+.superslider li{
+  width:100%;
+  display:none;
+  margin:0;
+  padding:0;
+}
+.superslider img{
+  width:100%;
+  height:auto;
 }
 
-.carousel img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
 
 
 
@@ -236,13 +247,6 @@ h1 {
 
 .button:hover {
   background-color: #cf2e77;
-}
-
-a {
-  color: #333;
-  text-decoration: none;
-  font-size: 1.2rem;
-  margin: 10px;
 }
 
 a:hover {
