@@ -3,110 +3,178 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Asistente Crohn</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script src="https://unpkg.com/react/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
-        .mySlides {
-            display: none;
+        body {
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .bg-custom-pink {
+            background-color: #DC00A5;
         }
     </style>
-
 </head>
 
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="../index.html">Landing page</a></li>
-                <li><a href="#">Crohn´s Assistant</a></li>
-                <li><a href="contact.html" class="active">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <section id="presentation">
-            <h1>Crohn’s Assistant</h1>
-            <p>Crohn’s Assistant is a mobile application for people who suffer from Crohn’s inflammatory bowel disease.
-                The main objective of the application is to automatically identify and alert the appearance of a
-                possible outbreak of the disease based on certain sets of symptoms referred by specialists. In addition,
-                it provides the user with an orientative access to reference recommendations on disease management,
-                endorsed by medical societies.</p>
-        </section>
-        <section>
-            <h2>Resources</h2>
-            <p>Check out the Linktree profile to access useful resources and links.</p>
-            <a href="https://linktr.ee/asistentecrohn">https://linktr.ee/asistentecrohn</a>
-        </section>
-        <section>
-            <h2>Outbreaks</h2>
-            <p>This is a post about my participation in the IV Health and Wellness Fair called Pontesán in Galicia. This
-                year’s focus was on nutrition and fighting obesity and it had over 40 non-profit entities participating.
-                I had the honor of presenting my mobile application called Crohn’s Assistant which helps patients manage
-                their Crohn’s inflammatory bowel disease more effectively and improve their quality of life. The app has
-                been very well received and has received a lot of positive feedback since its launch 10 months ago, with
-                a total of 450 downloads to date (May 2023).</p>
-            <div class="w3-content w3-display-container">
-                <img class="mySlides" src="../assets/pontesan_1.png" alt="" style="width:100%">
-                <img class="mySlides" src="../assets/pontesan_3.png" alt="" style="width:100%">
-                <img class="mySlides" src="../assets/pontesan_2.png" alt="" style="width:100%">
-                <img class="mySlides" src="../assets/pontesan_4.jpg" alt="" style="width:100%">
+    <div id="app"></div>
 
-                <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
-                <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
-            </div>
-        </section>
-        <section>
-            <h2>First version of the application</h2>
-            <p>The first version of Crohn’s Assistant was launched in June 2022. It included the following features:</p>
-            <ul>
-                <li>Symptom and medication tracking and registration.</li>
-                <li>Medical appointment calendar.</li>
-                <li>Information and support resources for patients.</li>
-            </ul>
-            <img src="../assets/APP_v1.0.png" alt="Screenshot of the first version of Crohn’s Assistant.">
-        </section>
-        <section>
-            <h2>In development version</h2>
-            <p>I am currently working on the next version of Crohn’s Assistant, which will include the following
-                improvements. As far from today (May 2023), I am finishing a public API of the new version. You can check it out at my GitHub.</p>
-            <ul>
-                <li>New modules and a renewed design.</li>
-                <li>Personalized recommendations based on collected data.</li>
-                <li>Access to your records by your IBD Unit.</li>
-            </ul>
-            <div>
-                <img src="../assets/APP_v2.0_1.png" style="width:100%" alt="Screenshot of the in development version of Crohn’s Assistant.">
-                <br>
-                <img src="../assets/APP_v2.0_2.png" style="width:100%" alt="Screenshot of the in development version of Crohn’s Assistant">
-            </div>
-        </section>
-    </main>
+    <script type="text/babel">
+        function App() {
+            return (
+                <div className="min-h-screen">
+                    <nav className="bg-white py-4 shadow-md">
+                        <div className="max-w-6xl mx-auto px-4">
+                            <div className="flex justify-between">
+                                <div className="flex space-x-4">
+                                    <div>
+                                        <a href="../index.html" className="flex items-center py-5 px-2 text-gray-700 hover:text-gray-900">
+                                            <img src="../assets/logo.png" alt="Logo" className="h-8 w-8 mr-2" />
+                                            <span className="py-5 px-3 text-gray-700 hover:text-gray-900">Inicio</span>
+                                        </a>
+                                    </div>
+                                    <div className="hidden md:flex items-center space-x-1">
+                                        <a href="eiis.html" className="py-5 px-3 text-gray-700 hover:text-gray-900">¿Qué son las EII?</a>
+                                        <a href="project.html" className="py-5 px-3 text-gray-700 hover:text-gray-900">El Proyecto</a>
+                                        <a href="#" className="py-5 px-3 font-bold text-pink-500 hover:text-gray-900">Asistente Crohn</a>
+                                        <a href="eii_assistant.html" className="py-5 px-3 text-gray-700 hover:text-gray-900">Asistente EII</a>
+                                        <a href="contact.html" className="py-5 px-3 text-gray-700 hover:text-gray-900">Contacto</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                    <main className="px-8 mt-12">
+                        <div className="bg-custom-pink">
+                            <div className="text-center py-8">
+                                <div className="inline-block w-1/2">
+                                    <h2 className="text-4xl font-semibold mb-2 text-white">656</h2>
+                                    <p className="text-white">Número de descargas</p>
+                                </div>
+                                <div className="inline-block w-1/2">
+                                    <h2 className="text-4xl font-semibold mb-2 text-white">181</h2>
+                                    <p className="text-white">Número de usuarios activos</p>
+                                </div>
+                            </div>
+                        </div>
+                        <section className="p-8">
+                            <h1 className="text-center text-2xl font-semibold mb-4">Asistente Crohn en TVE</h1>
+                            <p className="text-center mb-4">Conoce en qué te puede ayudar Asistente Crohn.</p>
+                            <p className="text-center mb-4">Puedes descargarla para Android <a href="#" className="text-pink-600 hover:underline">aquí</a>.</p>
+                            <div className="flex justify-center">
+                                <img src="https://placehold.co/600x400" alt="Pie chart showing the distribution of features in the project" className="max-w-full h-auto" />
+                            </div>
+                            <div className="relative pb-9/16">
+                                <iframe className="absolute w-full h-full left-0 top-0" src="https://player.vimeo.com/video/123456789" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+                            </div>
+                        </section>
+                        <section className="p-8">
+                            <h1 className="text-center text-2xl font-semibold mb-4">Conoce la aplicación</h1>
 
-    <script>
-        var slideIndex = 1;
-        showDivs(slideIndex);
+                            <div class="flex flex-wrap items-center justify-center gap-4 mb-8">
+                                <img alt="Mobile app wireframe showing a greeting message, and menu options for health, symptoms, nutrition, and recommendations." class="max-w-xs rounded-lg shadow-lg" height="600" src="https://oaidalleapiprodscus.blob.core.windows.net/private/org-WSxxpxmWR4FMZQnCvQ1Izbzr/user-2qy1vKRD3amSzpFzIgp9uiIj/img-Slrgep4dnGZ1cXvmWXssTZXw.png?st=2023-12-31T18%3A01%3A41Z&amp;se=2023-12-31T20%3A01%3A41Z&amp;sp=r&amp;sv=2021-08-06&amp;sr=b&amp;rscd=inline&amp;rsct=image/png&amp;skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&amp;sktid=a48cca56-e6da-484e-a814-9c849652bcb3&amp;skt=2023-12-30T20%3A14%3A31Z&amp;ske=2023-12-31T20%3A14%3A31Z&amp;sks=b&amp;skv=2021-08-06&amp;sig=/2pGAal9TkUQ8OimDEc1XHxI58ieRmcumkciJkZzQq0%3D" width="300" />
+                                <div class="max-w-md">
+                                    <p class="text-sm text-gray-600 mb-2">
+                                        Desde la pantalla principal, puedes acceder a los registros y a tu calendario.
+                                    </p>
+                                    <p class="text-sm text-gray-600">
+                                        Además, tienes a tu alcance recomendaciones de referencia avaladas por G-EducaInflamatoria del grupo GETECCU.
+                                    </p>
+                                </div>
+                            </div>
 
-        function plusDivs(n) {
-            showDivs(slideIndex += n);
+                            <div class="flex justify-center gap-4">
+                                <img alt="Mobile app wireframe showing symptom tracking features, including a list of symptoms with icons and a calendar view for symptom history." class="max-w-xs rounded-lg shadow-lg" height="600" src="https://oaidalleapiprodscus.blob.core.windows.net/private/org-WSxxpxmWR4FMZQnCvQ1Izbzr/user-2qy1vKRD3amSzpFzIgp9uiIj/img-m0Ibzlck6w9GbzDbyfIZ71eK.png?st=2023-12-31T18%3A01%3A42Z&amp;se=2023-12-31T20%3A01%3A42Z&amp;sp=r&amp;sv=2021-08-06&amp;sr=b&amp;rscd=inline&amp;rsct=image/png&amp;skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&amp;sktid=a48cca56-e6da-484e-a814-9c849652bcb3&amp;skt=2023-12-31T17%3A40%3A46Z&amp;ske=2024-01-01T17%3A40%3A46Z&amp;sks=b&amp;skv=2021-08-06&amp;sig=NN8Rmys2OYijKAC5Ymu8L0P1Et9bZAWnxDsGF/VvNOE%3D" width="300" />
+                            </div>
+                            <p class="text-sm text-gray-600 text-center mt-4">
+                                Registra tus síntomas y accede a ellos de una forma sencilla desde el calendario.
+                            </p>
+
+                            <div class="flex justify-center gap-4">
+                                <img alt="Mobile app wireframe showing symptom tracking features, including a list of symptoms with icons and a calendar view for symptom history." class="max-w-xs rounded-lg shadow-lg" height="600" src="https://oaidalleapiprodscus.blob.core.windows.net/private/org-WSxxpxmWR4FMZQnCvQ1Izbzr/user-2qy1vKRD3amSzpFzIgp9uiIj/img-m0Ibzlck6w9GbzDbyfIZ71eK.png?st=2023-12-31T18%3A01%3A42Z&amp;se=2023-12-31T20%3A01%3A42Z&amp;sp=r&amp;sv=2021-08-06&amp;sr=b&amp;rscd=inline&amp;rsct=image/png&amp;skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&amp;sktid=a48cca56-e6da-484e-a814-9c849652bcb3&amp;skt=2023-12-31T17%3A40%3A46Z&amp;ske=2024-01-01T17%3A40%3A46Z&amp;sks=b&amp;skv=2021-08-06&amp;sig=NN8Rmys2OYijKAC5Ymu8L0P1Et9bZAWnxDsGF/VvNOE%3D" width="300" />
+                            </div>
+                            <p class="text-sm text-gray-600 text-center mt-4">
+                                Registra tu alimentación y consúltala desde el calendario.</p>
+                            <p class="text-sm text-gray-600 text-center mt-4">
+                                Además, puedes registrar los alimentos que te hacen daño.</p>
+
+                            <div class="flex justify-center gap-4">
+                                <img alt="Mobile app wireframe showing symptom tracking features, including a list of symptoms with icons and a calendar view for symptom history." class="max-w-xs rounded-lg shadow-lg" height="600" src="https://oaidalleapiprodscus.blob.core.windows.net/private/org-WSxxpxmWR4FMZQnCvQ1Izbzr/user-2qy1vKRD3amSzpFzIgp9uiIj/img-m0Ibzlck6w9GbzDbyfIZ71eK.png?st=2023-12-31T18%3A01%3A42Z&amp;se=2023-12-31T20%3A01%3A42Z&amp;sp=r&amp;sv=2021-08-06&amp;sr=b&amp;rscd=inline&amp;rsct=image/png&amp;skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&amp;sktid=a48cca56-e6da-484e-a814-9c849652bcb3&amp;skt=2023-12-31T17%3A40%3A46Z&amp;ske=2024-01-01T17%3A40%3A46Z&amp;sks=b&amp;skv=2021-08-06&amp;sig=NN8Rmys2OYijKAC5Ymu8L0P1Et9bZAWnxDsGF/VvNOE%3D" width="300" />
+                            </div>
+                            <p class="text-sm text-gray-600 text-center mt-4">
+                                Conoce qué alimentos pueden estar causándote daño al correlacionarlos con tus síntomas.
+                            </p>
+
+                            <div class="flex justify-center gap-4">
+                                <img alt="Mobile app wireframe showing symptom tracking features, including a list of symptoms with icons and a calendar view for symptom history." class="max-w-xs rounded-lg shadow-lg" height="600" src="https://oaidalleapiprodscus.blob.core.windows.net/private/org-WSxxpxmWR4FMZQnCvQ1Izbzr/user-2qy1vKRD3amSzpFzIgp9uiIj/img-m0Ibzlck6w9GbzDbyfIZ71eK.png?st=2023-12-31T18%3A01%3A42Z&amp;se=2023-12-31T20%3A01%3A42Z&amp;sp=r&amp;sv=2021-08-06&amp;sr=b&amp;rscd=inline&amp;rsct=image/png&amp;skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&amp;sktid=a48cca56-e6da-484e-a814-9c849652bcb3&amp;skt=2023-12-31T17%3A40%3A46Z&amp;ske=2024-01-01T17%3A40%3A46Z&amp;sks=b&amp;skv=2021-08-06&amp;sig=NN8Rmys2OYijKAC5Ymu8L0P1Et9bZAWnxDsGF/VvNOE%3D" width="300" />
+                            </div>
+                            <p class="text-sm text-gray-600 text-center mt-4">
+                                Accede a información acerca de tu estado de salud y tu ánimo.</p>
+                            <p class="text-sm text-gray-600 text-center mt-4">
+                                Asistente Crohn es capaz de detectar un brote de Enfermedad de Crohn en base a tus registros.
+                            </p>
+
+                            <div class="flex justify-center gap-4">
+                                <img alt="Mobile app wireframe showing symptom tracking features, including a list of symptoms with icons and a calendar view for symptom history." class="max-w-xs rounded-lg shadow-lg" height="600" src="https://oaidalleapiprodscus.blob.core.windows.net/private/org-WSxxpxmWR4FMZQnCvQ1Izbzr/user-2qy1vKRD3amSzpFzIgp9uiIj/img-m0Ibzlck6w9GbzDbyfIZ71eK.png?st=2023-12-31T18%3A01%3A42Z&amp;se=2023-12-31T20%3A01%3A42Z&amp;sp=r&amp;sv=2021-08-06&amp;sr=b&amp;rscd=inline&amp;rsct=image/png&amp;skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&amp;sktid=a48cca56-e6da-484e-a814-9c849652bcb3&amp;skt=2023-12-31T17%3A40%3A46Z&amp;ske=2024-01-01T17%3A40%3A46Z&amp;sks=b&amp;skv=2021-08-06&amp;sig=NN8Rmys2OYijKAC5Ymu8L0P1Et9bZAWnxDsGF/VvNOE%3D" width="300" />
+                            </div>
+                            <p class="text-sm text-gray-600 text-center mt-4">
+                                Accede a información médica avalada por G-EducaInflamatoria del grupo GETTECU, una web de referencia en el tratamiento de las Enfermedades Inflamatorias Intestinales.</p>
+
+                            <div class="flex justify-center gap-4">
+                                <img alt="Mobile app wireframe showing symptom tracking features, including a list of symptoms with icons and a calendar view for symptom history." class="max-w-xs rounded-lg shadow-lg" height="600" src="https://oaidalleapiprodscus.blob.core.windows.net/private/org-WSxxpxmWR4FMZQnCvQ1Izbzr/user-2qy1vKRD3amSzpFzIgp9uiIj/img-m0Ibzlck6w9GbzDbyfIZ71eK.png?st=2023-12-31T18%3A01%3A42Z&amp;se=2023-12-31T20%3A01%3A42Z&amp;sp=r&amp;sv=2021-08-06&amp;sr=b&amp;rscd=inline&amp;rsct=image/png&amp;skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&amp;sktid=a48cca56-e6da-484e-a814-9c849652bcb3&amp;skt=2023-12-31T17%3A40%3A46Z&amp;ske=2024-01-01T17%3A40%3A46Z&amp;sks=b&amp;skv=2021-08-06&amp;sig=NN8Rmys2OYijKAC5Ymu8L0P1Et9bZAWnxDsGF/VvNOE%3D" width="300" />
+                            </div>
+                            <p class="text-sm text-gray-600 text-center mt-4">
+                                Modifica tus datos, tu tipo de Enfermedad de Crohn y conoce cómo son tratados.</p>
+
+                        </section >
+
+                        <section className="p-8">
+                            <h1 className="text-center text-2xl font-semibold mb-4">Detección temprana de brotes en Enfermedad de Crohn</h1>
+
+                            <div className="flex justify-center">
+                                <img src="https://placehold.co/600x400" alt="Pie chart showing the distribution of features in the project" className="max-w-full h-auto" />
+                            </div>
+                            <p className="text-center mb-4">Realizada una analítica, se comprobó que cuando la herramienta detectó un brote, este tuvo lugar. La proteína C reactiva es una proteína del hígado que indica inflamación o infección. Sirve para diagnosticar enfermedades inflamatorias. Si es mayor a 1mg/dL, se habla de complicaciones o brotes graves.</p>
+
+                            <div className="flex justify-center">
+                                <img src="https://placehold.co/600x400" alt="Pie chart showing the distribution of features in the project" className="max-w-full h-auto" />
+                            </div>
+                            <p className="text-center mb-4">La calprotectina fecal es una sustancia en las heces que indica inflamación en el intestino. Si el resultado es elevado se correlaciona con actividad en la enfermedad.</p>
+                        </section>
+
+                        <footer className="text-center mt-12 bg-pink-500 bottom-0 left-0 right-0">
+                            <div className="border-t border-gray-300 mx-auto w-10/12">
+                                <div className="flex justify-between items-center py-4 px-8">
+                                    <div className="text-white text-sm">
+                                        <span>&copy; 2023 Asistente EII - Todos los derechos reservados.</span>
+                                    </div>
+                                    <div className="flex space-x-4">
+                                        <a href="#" className="text-white">
+                                            <i className="fab fa-instagram fa-2x"></i>
+                                        </a>
+                                        <a href="#" className="text-white">
+                                            <i className="fas fa-envelope fa-2x"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div className="text-white text-sm py-4">
+                                    <a href="../assets/privacy_policy.html" className="text-white">Política de Privacidad</a>
+                                </div>
+                            </div>
+                        </footer>
+                    </main >
+                </div >
+            );
         }
 
-        function showDivs(n) {
-            var i;
-            var x = document.getElementsByClassName("mySlides");
-            if (n > x.length) { slideIndex = 1 }
-            if (n < 1) { slideIndex = x.length }
-            for (i = 0; i < x.length; i++) {
-                x[i].style.display = "none";
-            }
-            x[slideIndex - 1].style.display = "block";
-        }
+        ReactDOM.render(<App />, document.getElementById('app'));
     </script>
-
-    <footer>
-        <p>GNU General Public License v3.0 &copy; 2023 - Alberto Ruibal Ojea</p>
-    </footer>
 </body>
 
 </html>
