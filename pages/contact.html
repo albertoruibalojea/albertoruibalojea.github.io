@@ -1,44 +1,97 @@
-<!DOCTYPE html>
-<html lang="es">
+<html>
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact</title>
-    <link rel="stylesheet" href="../css/styles.css">
+    <title>Contact Page</title>
+    <script src="https://unpkg.com/react/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    </link>
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .custom-button-color {
+            background-color: #dc00a5;
+        }
+    </style>
 </head>
 
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="../index.html">Landing page</a></li>
-                <li><a href="crohns_assistant.html">Crohn´s Assistant</a></li>
-                <li><a href="#" class="active">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
+    <div id="contactPage"></div>
 
-    <main>
-        <h1>Contacto</h1>
-        <p class="seccion-descripcion">If you want to reach me, you can check my GitHub:</p>
-        <div class="contact-buttons">
-            <a href="mailto:tu_correo_electronico@example.com" target="_blank" rel="noopener">
-              <i class="far fa-envelope"></i> Email
-            </a>
-            <a href="https://github.com/albertoruibalojea" target="_blank" rel="noopener">
-              <i class="fab fa-linkedin"></i> LinkedIn
-            </a>
-            <a href="https://github.com/albertoruibalojea" target="_blank" rel="noopener">
-              <i class="fab fa-github"></i> GitHub
-            </a>
-          </div>
-    </main>
+    <script type="text/babel">
+        function ContactPage() {
+            return (
+                <div className="min-h-screen">
+                    <nav className="bg-white py-4 shadow-md">
+                        <div className="max-w-6xl mx-auto px-4">
+                            <div className="flex justify-between">
+                                <div className="flex space-x-4">
+                                    <div>
+                                        <a href="../index.html" className="flex items-center py-5 px-2 text-gray-700 hover:text-gray-900">
+                                            <img src="../assets/logo.png" alt="Logo" className="h-24 w-24 mr-2" />
+                                            <span className="py-5 px-3 text-gray-700 hover:text-gray-900">Inicio</span>
+                                        </a>
+                                    </div>
+                                    <div className="hidden md:flex items-center space-x-1">
+                                        <a href="eiis.html" className="py-5 px-3 text-gray-700 hover:text-gray-900">¿Qué son las EII?</a>
+                                        <a href="project.html" className="py-5 px-3 text-gray-700 hover:text-gray-900">El Proyecto</a>
+                                        <a href="crohns_assistant.html" className="py-5 px-3 text-gray-700 hover:text-gray-900">Asistente Crohn</a>
+                                        <a href="eii_assistant.html" className="py-5 px-3 text-gray-700 hover:text-gray-900">Asistente EII</a>
+                                        <a href="#" className="py-5 px-3 font-bold text-pink-500 hover:text-gray-900">Contacto</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                    <main className="mt-12">
+                        <h2 className="text-4xl font-semibold text-center text-gray-800 mb-12">Comunícate con nosotros.</h2>
+                        <div className="max-w-3xl mx-auto bg-white p-8 shadow">
+                            <div className="grid gap-4">
+                                <input className="border-2 border-gray-300 p-3" type="text" placeholder="Nombre" />
+                                <input className="border-2 border-gray-300 p-3" type="email" placeholder="Correo electrónico*" required />
+                                <input className="border-2 border-gray-300 p-3" type="tel" placeholder="Teléfono" />
+                                <textarea className="border-2 border-gray-300 p-3" placeholder="Estoy interesado en"></textarea>
+                                <textarea className="border-2 border-gray-300 p-3" placeholder="Otras notas"></textarea>
+                                <button className="custom-button-color text-white py-3 px-6 rounded hover:bg-purple-700">Enviar</button>
+                            </div>
+                        </div>
+                        <p className="text-center text-gray-500 text-xs mt-6">
+                            Este sitio está protegido por reCAPTCHA y aplican las Política de privacidad y los Términos de servicio de Google.
+                        </p>
 
-    <footer>
-        <p>GNU General Public License v3.0 &copy; 2023 - Alberto Ruibal Ojea</p>
-    </footer>
+                        <footer className="text-center mt-12 bg-pink-500 bottom-0 left-0 right-0">
+                            <div className="border-t border-gray-300 mx-auto w-10/12">
+                                <div className="flex justify-between items-center py-4 px-8">
+                                    <div className="text-white text-sm">
+                                        <span>&copy; 2023 Asistente EII - Todos los derechos reservados.</span>
+                                    </div>
+                                    <div className="flex space-x-4">
+                                        <a href="#" className="text-white">
+                                            <i className="fab fa-instagram fa-2x"></i>
+                                        </a>
+                                        <a href="#" className="text-white">
+                                            <i className="fas fa-envelope fa-2x"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div className="text-white text-sm py-4">
+                                    <a href="../assets/privacy_policy.html" className="text-white">Política de Privacidad</a>
+                                </div>
+                            </div>
+                        </footer>
+                    </main>
+                </div>
+            );
+        }
 
+        ReactDOM.render(<ContactPage />, document.getElementById('contactPage'));
+    </script>
 </body>
 
 </html>
