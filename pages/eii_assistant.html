@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Asistente EII</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../assets/logo.png">
     <script src="https://unpkg.com/react/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.js"></script>
@@ -21,21 +23,6 @@
     <div id="app"></div>
 
     <script type="text/babel">
-        function BlogPost({ date, category, title, summary, imageUrl, altText }) {
-            return (
-                <div className="mb-8">
-                    <div className="flex mb-2">
-                        <img className="w-32 h-20 mr-4" src={imageUrl} alt={altText} />
-                        <div>
-                            <div className="text-sm text-gray-600 mb-1">{date} | {category}</div>
-                            <div className="font-semibold mb-1">{title}</div>
-                            <div className="text-gray-600 mb-4">{summary}</div>
-                            <a href="#" className="text-blue-600 hover:text-blue-800">Continuar leyendo</a>
-                        </div>
-                    </div>
-                </div>
-            );
-        }
 
         function App() {
             return (
@@ -46,22 +33,22 @@
                                 <div className="flex space-x-4">
                                     <div>
                                         <a href="../index.html" className="flex items-center py-5 px-2 text-gray-700 hover:text-gray-900">
-                                            <img src="../assets/logo.png" alt="Logo" className="h-8 w-8 mr-2" />
+                                            <img src="../assets/logo.png" alt="Logo" className="h-24 w-24 mr-2" />
                                             <span className="py-5 px-3 text-gray-700 hover:text-gray-900">Inicio</span>
                                         </a>
                                     </div>
                                     <div className="hidden md:flex items-center space-x-1">
                                         <a href="eiis.html" className="py-5 px-3 text-gray-700 hover:text-gray-900">¿Qué son las EII?</a>
-                                        <a href="project.html" className="py-5 px-3 text-gray-700 hover:text-gray-900">El Proyecto</a>
+                                        <a href="#" className="py-5 px-3 text-gray-700 hover:text-gray-900">El Proyecto</a>
                                         <a href="crohns_assistant.html" className="py-5 px-3 text-gray-700 hover:text-gray-900">Asistente Crohn</a>
-                                        <a href="#" className="py-5 px-3 font-bold text-pink-500 hover:text-gray-900">Asistente EII</a>
+                                        <a href="eii_assistant.html" className="py-5 px-3 font-bold text-pink-500 hover:text-gray-900">Asistente EII</a>
                                         <a href="contact.html" className="py-5 px-3 text-gray-700 hover:text-gray-900">Contacto</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </nav>
-                    <main className="px-8 mt-12">
+                    <main className="px-96 mt-12">
                         <h1 className="text-center text-2xl font-semibold mb-6">¿En qué punto estamos?</h1>
                         <div className="flex justify-center">
                             <img src="https://placehold.co/600x400" alt="Pie chart showing the distribution of features in the project" className="max-w-full h-auto" />
@@ -71,19 +58,22 @@
                             <p>Para ello, se pretenden incorporar todas estas características en cuanto se disponga de la financiación necesaria para ello: necesitamos personal, servidores y reconocimiento.</p>
                         </article>
 
-                        <h1 className="text-center text-2xl font-semibold mb-6">Conoce nuestro prototipo de Asistente EII</h1>
-                        <div class="flex justify-center gap-4">
-                            <img alt="Mobile app wireframe showing symptom tracking features, including a list of symptoms with icons and a calendar view for symptom history." class="max-w-xs rounded-lg shadow-lg" height="600" src="https://oaidalleapiprodscus.blob.core.windows.net/private/org-WSxxpxmWR4FMZQnCvQ1Izbzr/user-2qy1vKRD3amSzpFzIgp9uiIj/img-m0Ibzlck6w9GbzDbyfIZ71eK.png?st=2023-12-31T18%3A01%3A42Z&amp;se=2023-12-31T20%3A01%3A42Z&amp;sp=r&amp;sv=2021-08-06&amp;sr=b&amp;rscd=inline&amp;rsct=image/png&amp;skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&amp;sktid=a48cca56-e6da-484e-a814-9c849652bcb3&amp;skt=2023-12-31T17%3A40%3A46Z&amp;ske=2024-01-01T17%3A40%3A46Z&amp;sks=b&amp;skv=2021-08-06&amp;sig=NN8Rmys2OYijKAC5Ymu8L0P1Et9bZAWnxDsGF/VvNOE%3D" width="300" />
+                        <div>
+                            <h1 className="text-center text-2xl font-semibold mb-6">Conoce nuestro prototipo de Asistente EII</h1>
+                            <div class="flex justify-center gap-4">
+                                <img alt="Mobile app wireframe showing symptom tracking features, including a list of symptoms with icons and a calendar view for symptom history." class="max-w-xs rounded-lg shadow-lg" height="600" src="https://oaidalleapiprodscus.blob.core.windows.net/private/org-WSxxpxmWR4FMZQnCvQ1Izbzr/user-2qy1vKRD3amSzpFzIgp9uiIj/img-m0Ibzlck6w9GbzDbyfIZ71eK.png?st=2023-12-31T18%3A01%3A42Z&amp;se=2023-12-31T20%3A01%3A42Z&amp;sp=r&amp;sv=2021-08-06&amp;sr=b&amp;rscd=inline&amp;rsct=image/png&amp;skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&amp;sktid=a48cca56-e6da-484e-a814-9c849652bcb3&amp;skt=2023-12-31T17%3A40%3A46Z&amp;ske=2024-01-01T17%3A40%3A46Z&amp;sks=b&amp;skv=2021-08-06&amp;sig=NN8Rmys2OYijKAC5Ymu8L0P1Et9bZAWnxDsGF/VvNOE%3D" width="300" />
+                            </div>
+                            <p class="text-sm text-gray-600 text-center mt-4">
+                                Registra tus síntomas y accede a ellos de una forma sencilla desde el calendario.
+                            </p>
+                            <div class="flex justify-center gap-4">
+                                <img alt="Mobile app wireframe showing symptom tracking features, including a list of symptoms with icons and a calendar view for symptom history." class="max-w-xs rounded-lg shadow-lg" height="600" src="https://oaidalleapiprodscus.blob.core.windows.net/private/org-WSxxpxmWR4FMZQnCvQ1Izbzr/user-2qy1vKRD3amSzpFzIgp9uiIj/img-m0Ibzlck6w9GbzDbyfIZ71eK.png?st=2023-12-31T18%3A01%3A42Z&amp;se=2023-12-31T20%3A01%3A42Z&amp;sp=r&amp;sv=2021-08-06&amp;sr=b&amp;rscd=inline&amp;rsct=image/png&amp;skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&amp;sktid=a48cca56-e6da-484e-a814-9c849652bcb3&amp;skt=2023-12-31T17%3A40%3A46Z&amp;ske=2024-01-01T17%3A40%3A46Z&amp;sks=b&amp;skv=2021-08-06&amp;sig=NN8Rmys2OYijKAC5Ymu8L0P1Et9bZAWnxDsGF/VvNOE%3D" width="300" />
+                            </div>
+                            <p class="text-sm text-gray-600 text-center mt-4">
+                                Registra tus síntomas y accede a ellos de una forma sencilla desde el calendario.
+                            </p>
                         </div>
-                        <p class="text-sm text-gray-600 text-center mt-4">
-                            Registra tus síntomas y accede a ellos de una forma sencilla desde el calendario.
-                        </p>
-                        <div class="flex justify-center gap-4">
-                            <img alt="Mobile app wireframe showing symptom tracking features, including a list of symptoms with icons and a calendar view for symptom history." class="max-w-xs rounded-lg shadow-lg" height="600" src="https://oaidalleapiprodscus.blob.core.windows.net/private/org-WSxxpxmWR4FMZQnCvQ1Izbzr/user-2qy1vKRD3amSzpFzIgp9uiIj/img-m0Ibzlck6w9GbzDbyfIZ71eK.png?st=2023-12-31T18%3A01%3A42Z&amp;se=2023-12-31T20%3A01%3A42Z&amp;sp=r&amp;sv=2021-08-06&amp;sr=b&amp;rscd=inline&amp;rsct=image/png&amp;skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&amp;sktid=a48cca56-e6da-484e-a814-9c849652bcb3&amp;skt=2023-12-31T17%3A40%3A46Z&amp;ske=2024-01-01T17%3A40%3A46Z&amp;sks=b&amp;skv=2021-08-06&amp;sig=NN8Rmys2OYijKAC5Ymu8L0P1Et9bZAWnxDsGF/VvNOE%3D" width="300" />
-                        </div>
-                        <p class="text-sm text-gray-600 text-center mt-4">
-                            Registra tus síntomas y accede a ellos de una forma sencilla desde el calendario.
-                        </p>
+
 
                         <footer className="text-center mt-12 bg-pink-500 bottom-0 left-0 right-0">
                             <div className="border-t border-gray-300 mx-auto w-10/12">
@@ -92,10 +82,10 @@
                                         <span>&copy; 2023 Asistente EII - Todos los derechos reservados.</span>
                                     </div>
                                     <div className="flex space-x-4">
-                                        <a href="#" className="text-white">
+                                        <a href="https://www.instagram.com/ibdassistant" className="text-white">
                                             <i className="fab fa-instagram fa-2x"></i>
                                         </a>
-                                        <a href="#" className="text-white">
+                                        <a href="mailto:asistente_crohn@outlook.es" className="text-white">
                                             <i className="fas fa-envelope fa-2x"></i>
                                         </a>
                                     </div>
