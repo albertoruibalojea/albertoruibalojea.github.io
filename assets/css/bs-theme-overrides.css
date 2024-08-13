@@ -16,12 +16,12 @@
   --bs-btn-bg: #cb658e;
   --bs-btn-border-color: #cb658e;
   --bs-btn-hover-color: #fff;
-  --bs-btn-hover-bg: #BB008C;
-  --bs-btn-hover-border-color: #B00084;
+  --bs-btn-hover-bg: #b0658e;
+  --bs-btn-hover-border-color: #b0658e;
   --bs-btn-focus-shadow-rgb: 250,217,242;
   --bs-btn-active-color: #fff;
-  --bs-btn-active-bg: #B00084;
-  --bs-btn-active-border-color: #A5007C;
+  --bs-btn-active-bg: #b0658e;
+  --bs-btn-active-border-color: #a5658e;
   --bs-btn-disabled-color: #fff;
   --bs-btn-disabled-bg: #cb658e;
   --bs-btn-disabled-border-color: #cb658e;
