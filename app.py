@@ -21,7 +21,7 @@ def chat():
         if not user_message:
             return jsonify({"error": "No se envió un mensaje válido."}), 400
 
-        # Llamada a la nueva API
+        # Llamada a la API de OpenAI
         chat_completion = client.chat.completions.create(
             model="gpt-4",  # Asegúrate de usar un modelo válido
             messages=[
@@ -30,8 +30,8 @@ def chat():
             ]
         )
 
-        # Extraer la respuesta
-        reply = chat_completion["choices"][0]["message"]["content"]
+        # Acceder al contenido del mensaje de la respuesta
+        reply = chat_completion.choices[0].message.content
         return jsonify({"reply": reply})
 
     except Exception as e:
