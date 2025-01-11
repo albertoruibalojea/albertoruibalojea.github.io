@@ -152,16 +152,15 @@
     <div class="container my-5">
         <div class="row">
             <div class="col">
-                <h1 class="text-center mb-4">Tu Asistente Especializado en EIIs</h1>
-                <p class="text-center mb-4">Haz tus preguntas sobre enfermedades inflamatorias intestinales (Crohn,
-                    colitis ulcerosa, etc.)</p>
+                <h1 class="text-center mb-4">Chat privado con Flatus</h1>
+                <p class="text-center mb-4">Pregúntale a Flatus lo que quieras saber</p>
                 <div id="suggestions">
                     <button onclick="sendPredefinedMessage('¿Qué es la enfermedad de Crohn?')">¿Qué es la enfermedad de
                         Crohn?</button>
                     <button onclick="sendPredefinedMessage('¿Cuáles son los síntomas más frecuentes en una EII?')">Síntomas
                         de una EII</button>
                     <button onclick="sendPredefinedMessage('¿Qué tratamientos existen para la EII?')">Tratamientos para
-                        la EII</button>S
+                        la EII</button>
                 </div>
                 <div id="chat-container">
                     <!-- Los mensajes se agregarán aquí dinámicamente -->
@@ -221,7 +220,7 @@
             </div>
         </div>
     </footer>
-    <script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js"></script>
+    <script src="https://unpkg.com/twemoji@latest/dist/twemoji.min.js"></script>
     <script>
         const chatContainer = document.getElementById("chat-container");
         const userInput = document.getElementById("user-input");
