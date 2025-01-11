@@ -200,6 +200,17 @@
             <div class="col">
                 <h1 class="text-center mb-4">Chat privado con Flatus</h1>
                 <p class="text-center mb-4">Pregúntale a Flatus lo que quieras saber</p>
+                <div class="d-flex justify-content-between mt-3">
+                    <button onclick="exportChat()" class="btn-custom">
+                        <img src="/app/assets/export.png" alt="Exportar">Exportar
+                    </button>
+                    <button id="theme-toggle" class="btn-custom">
+                        <img src="/app/assets/switch_mode.png" alt="Modo Oscuro">Modo Oscuro
+                    </button>
+                    <button onclick="clearChat()" class="btn-custom">
+                        <img src="/app/assets/delete.png" alt="Vaciar">Vaciar Chat
+                    </button>
+                </div>
                 <div id="suggestions">
                     <button onclick="sendPredefinedMessage('¿Qué es la enfermedad de Crohn?')">¿Qué es la enfermedad de
                         Crohn?</button>
@@ -215,17 +226,6 @@
                 <div id="input-container">
                     <input id="user-input" type="text" placeholder="Escribe tu mensaje..." />
                     <button id="send-btn">Enviar</button>
-                </div>
-                <div class="d-flex justify-content-between mt-3">
-                    <button onclick="exportChat()" class="btn-custom">
-                        <img src="/app/assets/export.png" alt="Exportar">Exportar
-                    </button>
-                    <button id="theme-toggle" class="btn-custom">
-                        <img src="/app/assets/switch_mode.png" alt="Modo Oscuro">Modo Oscuro
-                    </button>
-                    <button onclick="clearChat()" class="btn-custom">
-                        <img src="/app/assets/delete.png" alt="Vaciar">Vaciar Chat
-                    </button>
                 </div>
             </div>
         </div>
