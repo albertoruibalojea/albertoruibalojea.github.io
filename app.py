@@ -1,13 +1,15 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import openai
+from openai import OpenAI
+
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 import os
 
 app = Flask(__name__)
 CORS(app)
 
 # Configurar la clave API de OpenAI
-openai.api_key = os.getenv("OPENAI_API_KEY")
 
 @app.route("/chat", methods=["POST"])
 def chat():
@@ -20,23 +22,21 @@ def chat():
             return jsonify({"error": "No se envió un mensaje válido."}), 400
 
         # Llamada a OpenAI API usando el nuevo formato
-        response = openai.ChatCompletion.create(
-            model="gpt-4",
-            messages=[
-                {"role": "system", "content": "Eres un asistente especializado en enfermedades inflamatorias intestinales. Proporciona respuestas claras, concisas y basadas en evidencia médica."},
-                {"role": "user", "content": user_message},
-            ]
-        )
+        response = client.chat.completions.create(model="gpt-4",
+        messages=[
+            {"role": "system", "content": "Eres un asistente especializado en enfermedades inflamatorias intestinales. Proporciona respuestas claras, concisas y basadas en evidencia médica."},
+            {"role": "user", "content": user_message},
+        ])
 
         # Extraer la respuesta del modelo
-        reply = response.choices[0].message["content"]
+        reply = response.choices[0].message.content
         return jsonify({"reply": reply})
 
-    except openai.error.AuthenticationError:
+    except openai.AuthenticationError:
         return jsonify({"error": "Error de autenticación. Verifica tu clave API."}), 401
-    except openai.error.RateLimitError:
+    except openai.RateLimitError:
         return jsonify({"error": "Se alcanzó el límite de solicitudes. Intenta más tarde."}), 429
-    except openai.error.OpenAIError as e:
+    except openai.OpenAIError as e:
         return jsonify({"error": f"Error en la API de OpenAI: {str(e)}"}), 500
     except Exception as e:
         return jsonify({"error": f"Error interno del servidor: {str(e)}"}), 500
