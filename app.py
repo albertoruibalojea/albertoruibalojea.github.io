@@ -22,17 +22,17 @@ def chat():
         response = openai.ChatCompletion.create(
             model="gpt-4",
             messages=[
-                {"role": "system", "content": "Eres un asistente especializado en enfermedades inflamatorias intestinales (EIIs). Ofreces información basada en evidencia médica."},
+                {"role": "system", "content": "Eres un asistente especializado en enfermedades inflamatorias intestinales (EIIs). Proporciona información precisa y basada en evidencia médica."},
                 {"role": "user", "content": user_message},
             ]
         )
-        reply = response.choices[0].message.content
+
+        reply = response["choices"][0]["message"]["content"]
         return jsonify({"reply": reply})
 
-    except openai.error.OpenAIError as e:
-        return jsonify({"error": str(e)}), 500
     except Exception as e:
-        return jsonify({"error": "Error interno del servidor: " + str(e)}), 500
+        # Manejar cualquier error genérico
+        return jsonify({"error": f"Error interno del servidor: {str(e)}"}), 500
 
 if __name__ == "__main__":
     app.run(debug=True)
