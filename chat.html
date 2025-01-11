@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Home - Asistente EII</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Inter:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
     <link rel="stylesheet" href="assets/css/swiper-icons.css">
     <link rel="stylesheet" href="assets/css/bs-theme-overrides.css">
     <link rel="stylesheet" href="assets/css/Simple-Slider-swiper-bundle.min.css">
@@ -26,6 +27,7 @@
             display: flex;
             flex-direction: column;
         }
+
         .message {
             display: flex;
             align-items: center;
@@ -35,39 +37,46 @@
             border-radius: 15px;
             animation: fadeIn 0.3s ease-in-out;
         }
+
         .message img {
             width: 40px;
             height: 40px;
             border-radius: 50%;
             margin-right: 10px;
         }
+
         .message.user {
             background-color: #cb658e;
             color: white;
             align-self: flex-end;
             flex-direction: row-reverse;
         }
+
         .message.user img {
             margin-left: 10px;
             margin-right: 0;
         }
+
         .message.assistant {
             background-color: #e9ecef;
             color: black;
             align-self: flex-start;
         }
+
         #input-container {
             display: flex;
             padding: 10px;
             background-color: white;
             border-top: 1px solid #ddd;
         }
+
         #input-container input {
             flex: 1;
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 5px;
         }
+
         #input-container button {
             margin-left: 10px;
             padding: 10px 20px;
@@ -76,9 +85,11 @@
             border: none;
             border-radius: 5px;
         }
+
         #suggestions {
             margin-bottom: 10px;
         }
+
         #suggestions button {
             margin: 5px;
             padding: 10px 15px;
@@ -87,27 +98,33 @@
             border-radius: 5px;
             cursor: pointer;
         }
+
         #suggestions button:hover {
             background-color: #cb658e;
             color: white;
         }
+
         @keyframes fadeIn {
             from {
                 opacity: 0;
                 transform: translateY(10px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
+
         body.dark-mode {
             background-color: #121212;
             color: #f1f1f1;
         }
+
         body.dark-mode .message.user {
             background-color: #bb4b6c;
         }
+
         body.dark-mode .message.assistant {
             background-color: #424242;
         }
@@ -116,7 +133,11 @@
 
 <body>
     <nav class="navbar navbar-expand-md sticky-top navbar-shrink py-3 navbar-light" id="mainNav">
-        <div class="container"><a class="navbar-brand d-flex align-items-center" href="/"><span><img src="assets/img/brands/logo_transparente.png" style="width: 64px;height: 64px;">Asistente EII</span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-2"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+        <div class="container"><a class="navbar-brand d-flex align-items-center" href="/"><span><img
+                        src="assets/img/brands/logo_transparente.png" style="width: 64px;height: 64px;">Asistente
+                    EII</span></a><button data-bs-toggle="collapse" class="navbar-toggler"
+                data-bs-target="#navcol-2"><span class="visually-hidden">Toggle navigation</span><span
+                    class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navcol-2">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
@@ -132,11 +153,15 @@
         <div class="row">
             <div class="col">
                 <h1 class="text-center mb-4">Tu Asistente Especializado en EIIs</h1>
-                <p class="text-center mb-4">Haz tus preguntas sobre enfermedades inflamatorias intestinales (Crohn, colitis ulcerosa, etc.)</p>
+                <p class="text-center mb-4">Haz tus preguntas sobre enfermedades inflamatorias intestinales (Crohn,
+                    colitis ulcerosa, etc.)</p>
                 <div id="suggestions">
-                    <button onclick="sendPredefinedMessage('¿Qué es la enfermedad de Crohn?')">¿Qué es la enfermedad de Crohn?</button>
-                    <button onclick="sendPredefinedMessage('¿Cuáles son los síntomas de la colitis ulcerosa?')">Síntomas de colitis ulcerosa</button>
-                    <button onclick="sendPredefinedMessage('¿Qué tratamientos existen para la EII?')">Tratamientos para la EII</button>
+                    <button onclick="sendPredefinedMessage('¿Qué es la enfermedad de Crohn?')">¿Qué es la enfermedad de
+                        Crohn?</button>
+                    <button onclick="sendPredefinedMessage('¿Cuáles son los síntomas más frecuentes en una EII?')">Síntomas
+                        de una EII</button>
+                    <button onclick="sendPredefinedMessage('¿Qué tratamientos existen para la EII?')">Tratamientos para
+                        la EII</button>S
                 </div>
                 <div id="chat-container">
                     <!-- Los mensajes se agregarán aquí dinámicamente -->
@@ -174,8 +199,11 @@
                         <li><a href="privacy_policy.html">Política de privacidad</a></li>
                     </ul>
                 </div>
-                <div class="col-lg-3 text-center text-lg-start d-flex flex-column align-items-center order-first align-items-lg-start order-lg-last">
-                    <div class="fw-bold d-flex align-items-center mb-2"><img src="assets/img/brands/logo_transparente.png" width="64" height="64"><span>Asistente EII</span></div>
+                <div
+                    class="col-lg-3 text-center text-lg-start d-flex flex-column align-items-center order-first align-items-lg-start order-lg-last">
+                    <div class="fw-bold d-flex align-items-center mb-2"><img
+                            src="assets/img/brands/logo_transparente.png" width="64" height="64"><span>Asistente
+                            EII</span></div>
                     <p class="text-muted">Tu aliado en tu lucha contra las EIIs</p>
                 </div>
             </div>
@@ -183,9 +211,12 @@
             <div class="text-muted d-flex justify-content-between align-items-center pt-3">
                 <p class="mb-0">Copyright © 2024 Asistente EII</p>
                 <ul class="list-inline mb-0">
-                    <li class="list-inline-item"><a href="https://twitter.com/asistente_crohn"><i class="fab fa-twitter"></i></a></li>
-                    <li class="list-inline-item"><a href="https://www.instagram.com/ibdassistant"><i class="fab fa-instagram"></i></a></li>
-                    <li class="list-inline-item"><a href="https://linktr.ee/ibdassistant"><i class="fas fa-link"></i></a></li>
+                    <li class="list-inline-item"><a href="https://twitter.com/asistente_crohn"><i
+                                class="fab fa-twitter"></i></a></li>
+                    <li class="list-inline-item"><a href="https://www.instagram.com/ibdassistant"><i
+                                class="fab fa-instagram"></i></a></li>
+                    <li class="list-inline-item"><a href="https://linktr.ee/ibdassistant"><i
+                                class="fas fa-link"></i></a></li>
                 </ul>
             </div>
         </div>
@@ -260,8 +291,13 @@
         }
 
         function renderEmojis() {
-            twemoji.parse(chatContainer);
+            if (typeof twemoji !== "undefined") {
+                twemoji.parse(chatContainer);
+            } else {
+                console.error("Twemoji no está definido. Verifica si el script fue cargado correctamente.");
+            }
         }
+
 
         toggleButton.addEventListener("click", () => {
             document.body.classList.toggle("dark-mode");
