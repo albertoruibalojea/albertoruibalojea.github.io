@@ -208,18 +208,17 @@
                 const role = msg.classList.contains("user") ? "Usuario" : "Flatus";
                 const content = msg.querySelector("span").textContent;
                 const timestamp = msg.getAttribute("data-timestamp");
-                return `${role} [${timestamp}]: ${content}`;
+                return { role, content, timestamp }; // Guardamos como un objeto JSON
             });
             localStorage.setItem("chatHistory", JSON.stringify(messages));
         }
 
+
         function loadChatHistory() {
             const savedMessages = JSON.parse(localStorage.getItem("chatHistory")) || [];
             savedMessages.forEach((msg) => {
-                const [roleAndTime, content] = msg.split("]: ");
-                const role = roleAndTime.includes("Usuario") ? "user" : "assistant";
-                const timestamp = roleAndTime.match(/\[(.*?)\]/)[1];
-                addMessageWithTimestamp(content, role, timestamp);
+                const { role, content, timestamp } = msg; // Extraemos los datos directamente del objeto
+                addMessageWithTimestamp(content, role === "Usuario" ? "user" : "assistant", timestamp);
             });
         }
 
