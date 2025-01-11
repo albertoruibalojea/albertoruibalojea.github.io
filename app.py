@@ -1,10 +1,12 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import openai
 import os
 
 app = Flask(__name__)
+CORS(app)  # Habilita CORS para todas las rutas
 
-# Configurar tu clave API de OpenAI desde las variables de entorno
+# Configurar la clave API de OpenAI
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 @app.route("/chat", methods=["POST"])
@@ -20,7 +22,7 @@ def chat():
             {"role": "user", "content": user_message},
         ]
     )
-    reply = response['choices'][0]['message']['content']
+    reply = response["choices"][0]["message"]["content"]
     return jsonify({"reply": reply})
 
 if __name__ == "__main__":
