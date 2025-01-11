@@ -157,7 +157,8 @@
                 <div id="suggestions">
                     <button onclick="sendPredefinedMessage('¿Qué es la enfermedad de Crohn?')">¿Qué es la enfermedad de
                         Crohn?</button>
-                    <button onclick="sendPredefinedMessage('¿Cuáles son los síntomas más frecuentes en una EII?')">Síntomas
+                    <button
+                        onclick="sendPredefinedMessage('¿Cuáles son los síntomas más frecuentes en una EII?')">Síntomas
                         de una EII</button>
                     <button onclick="sendPredefinedMessage('¿Qué tratamientos existen para la EII?')">Tratamientos para
                         la EII</button>
@@ -265,38 +266,61 @@
         }
 
         function saveChatHistory() {
-            const messages = Array.from(chatContainer.children).map((msg) => ({
-                content: msg.querySelector("span").textContent,
-                role: msg.classList.contains("user") ? "user" : "assistant",
-            }));
+            const messages = Array.from(chatContainer.children).map((msg) => {
+                const role = msg.classList.contains("user") ? "Usuario" : "Flatus";
+                const content = msg.querySelector("span").textContent;
+                const timestamp = msg.getAttribute("data-timestamp");
+                return `${role} [${timestamp}]: ${content}`;
+            });
             localStorage.setItem("chatHistory", JSON.stringify(messages));
         }
 
         function loadChatHistory() {
             const savedMessages = JSON.parse(localStorage.getItem("chatHistory")) || [];
-            savedMessages.forEach((msg) => addMessage(msg.content, msg.role));
+            savedMessages.forEach((msg) => {
+                const [roleAndTime, content] = msg.split("]: ");
+                const role = roleAndTime.includes("Usuario") ? "user" : "assistant";
+                const timestamp = roleAndTime.match(/\[(.*?)\]/)[1];
+                addMessageWithTimestamp(content, role, timestamp);
+            });
+        }
+
+        function addMessageWithTimestamp(content, role, timestamp = new Date().toLocaleString()) {
+            const messageDiv = document.createElement("div");
+            messageDiv.classList.add("message", role);
+            messageDiv.setAttribute("data-timestamp", timestamp);
+
+            const img = document.createElement("img");
+            img.src = role === "user" ? "/app/assets/user.png" : "/app/assets/flatus.png";
+
+            const text = document.createElement("span");
+            text.textContent = content;
+
+            messageDiv.appendChild(img);
+            messageDiv.appendChild(text);
+
+            chatContainer.appendChild(messageDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight; // Desplazar hacia el último mensaje
+            renderEmojis();
         }
 
         async function exportChat() {
             const messages = Array.from(chatContainer.children).map((msg) => {
                 const role = msg.classList.contains("user") ? "Usuario" : "Flatus";
-                return `${role}: ${msg.querySelector("span").textContent}`;
+                const content = msg.querySelector("span").textContent;
+                const timestamp = msg.getAttribute("data-timestamp");
+                return `${role} [${timestamp}]: ${content}`;
             });
             const blob = new Blob([messages.join("\n")], { type: "text/plain" });
             const link = document.createElement("a");
             link.href = URL.createObjectURL(blob);
-            link.download = "chat.txt";
+            link.download = `chat_${new Date().toLocaleDateString().replace(/\//g, "-")}.txt`;
             link.click();
         }
 
         function renderEmojis() {
-            if (typeof twemoji !== "undefined") {
-                twemoji.parse(chatContainer);
-            } else {
-                console.error("Twemoji no está definido. Verifica si el script fue cargado correctamente.");
-            }
+            twemoji.parse(chatContainer);
         }
-
 
         toggleButton.addEventListener("click", () => {
             document.body.classList.toggle("dark-mode");
@@ -306,7 +330,8 @@
             const userMessage = userInput.value.trim();
             if (!userMessage) return;
 
-            addMessage(userMessage, "user");
+            const timestamp = new Date().toLocaleString();
+            addMessageWithTimestamp(userMessage, "user", timestamp);
             userInput.value = "";
 
             const typingIndicator = await addTypingIndicator();
@@ -322,13 +347,13 @@
                 removeTypingIndicator(typingIndicator);
 
                 if (data.reply) {
-                    addMessage(data.reply, "assistant");
+                    addMessageWithTimestamp(data.reply, "assistant", new Date().toLocaleString());
                 } else {
-                    addMessage("Lo siento, ocurrió un error. Inténtalo de nuevo más tarde.", "assistant");
+                    addMessageWithTimestamp("Lo siento, ocurrió un error. Inténtalo de nuevo más tarde.", "assistant", new Date().toLocaleString());
                 }
             } catch (error) {
                 removeTypingIndicator(typingIndicator);
-                addMessage("Error de conexión con el servidor. Inténtalo de nuevo.", "assistant");
+                addMessageWithTimestamp("Error de conexión con el servidor. Inténtalo de nuevo.", "assistant", new Date().toLocaleString());
             }
         });
 
