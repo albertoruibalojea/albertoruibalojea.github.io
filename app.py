@@ -12,28 +12,32 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 @app.route("/chat", methods=["POST"])
 def chat():
     try:
-        # Obtener el mensaje del usuario
+        # Obtener el mensaje del usuario desde la solicitud
         data = request.json
         user_message = data.get("message", "")
 
         if not user_message:
             return jsonify({"error": "No se envió un mensaje válido."}), 400
 
-        # Llamada a OpenAI API con el nuevo formato
+        # Llamada a OpenAI API usando el nuevo formato
         response = openai.ChatCompletion.create(
             model="gpt-4",
             messages=[
-                {"role": "system", "content": "Eres un asistente especializado en enfermedades inflamatorias intestinales. Ofreces información precisa y basada en evidencia médica."},
+                {"role": "system", "content": "Eres un asistente especializado en enfermedades inflamatorias intestinales. Proporciona respuestas claras, concisas y basadas en evidencia médica."},
                 {"role": "user", "content": user_message},
             ]
         )
 
-        # Obtener la respuesta del modelo
+        # Extraer la respuesta del modelo
         reply = response.choices[0].message["content"]
         return jsonify({"reply": reply})
 
+    except openai.error.AuthenticationError:
+        return jsonify({"error": "Error de autenticación. Verifica tu clave API."}), 401
+    except openai.error.RateLimitError:
+        return jsonify({"error": "Se alcanzó el límite de solicitudes. Intenta más tarde."}), 429
     except openai.error.OpenAIError as e:
-        return jsonify({"error": f"Error en OpenAI API: {str(e)}"}), 500
+        return jsonify({"error": f"Error en la API de OpenAI: {str(e)}"}), 500
     except Exception as e:
         return jsonify({"error": f"Error interno del servidor: {str(e)}"}), 500
 
