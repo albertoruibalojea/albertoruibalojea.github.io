@@ -120,13 +120,27 @@
             background-color: #121212;
             color: #f1f1f1;
         }
-
         body.dark-mode .message.user {
             background-color: #bb4b6c;
         }
-
         body.dark-mode .message.assistant {
-            background-color: #424242;
+            background-color: #333333; /* Ajustado para mejor contraste */
+            color: #f1f1f1;
+        }
+        body.dark-mode #input-container {
+            background-color: #1e1e1e;
+            border-top: 1px solid #333;
+        }
+        body.dark-mode #chat-container {
+            background-color: #1e1e1e;
+            border: 1px solid #333;
+        }
+        body.dark-mode #suggestions button {
+            background-color: #333;
+            color: #f1f1f1;
+        }
+        body.dark-mode #suggestions button:hover {
+            background-color: #bb4b6c;
         }
     </style>
 </head>
