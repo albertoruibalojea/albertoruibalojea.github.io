@@ -19,8 +19,8 @@ def chat():
         if not user_message:
             return jsonify({"error": "No se envió un mensaje válido."}), 400
 
-        # Llamada a OpenAI API usando el formato actualizado
-        response = openai.Chat.create(
+        # Llamada a OpenAI API usando el método correcto
+        response = openai.ChatCompletion.create(
             model="gpt-4",
             messages=[
                 {
@@ -39,13 +39,8 @@ def chat():
         reply = response["choices"][0]["message"]["content"]
         return jsonify({"reply": reply})
 
-    except openai.error.AuthenticationError:
-        return jsonify({"error": "Error de autenticación. Verifica tu clave API."}), 401
-    except openai.error.RateLimitError:
-        return jsonify({"error": "Se alcanzó el límite de solicitudes. Intenta más tarde."}), 429
-    except openai.error.OpenAIError as e:
-        return jsonify({"error": f"Error en la API de OpenAI: {str(e)}"}), 500
     except Exception as e:
+        # Manejo de errores genéricos
         return jsonify({"error": f"Error interno del servidor: {str(e)}"}), 500
 
 if __name__ == "__main__":
