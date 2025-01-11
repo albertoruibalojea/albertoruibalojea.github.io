@@ -12,26 +12,29 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 @app.route("/chat", methods=["POST"])
 def chat():
     try:
+        # Obtener el mensaje del usuario
         data = request.json
         user_message = data.get("message", "")
 
         if not user_message:
             return jsonify({"error": "No se envió un mensaje válido."}), 400
 
-        # Llamada a OpenAI API
+        # Llamada a OpenAI API con el nuevo formato
         response = openai.ChatCompletion.create(
             model="gpt-4",
             messages=[
-                {"role": "system", "content": "Eres un asistente especializado en enfermedades inflamatorias intestinales (EIIs). Proporciona información precisa y basada en evidencia médica."},
+                {"role": "system", "content": "Eres un asistente especializado en enfermedades inflamatorias intestinales. Ofreces información precisa y basada en evidencia médica."},
                 {"role": "user", "content": user_message},
             ]
         )
 
-        reply = response["choices"][0]["message"]["content"]
+        # Obtener la respuesta del modelo
+        reply = response.choices[0].message["content"]
         return jsonify({"reply": reply})
 
+    except openai.error.OpenAIError as e:
+        return jsonify({"error": f"Error en OpenAI API: {str(e)}"}), 500
     except Exception as e:
-        # Manejar cualquier error genérico
         return jsonify({"error": f"Error interno del servidor: {str(e)}"}), 500
 
 if __name__ == "__main__":
