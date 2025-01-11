@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Home - Asistente EII</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Inter:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
     <link rel="stylesheet" href="assets/css/swiper-icons.css">
     <link rel="stylesheet" href="assets/css/bs-theme-overrides.css">
     <link rel="stylesheet" href="assets/css/Simple-Slider-swiper-bundle.min.css">
@@ -26,6 +27,7 @@
             display: flex;
             flex-direction: column;
         }
+
         .message {
             display: flex;
             align-items: center;
@@ -35,105 +37,107 @@
             border-radius: 15px;
             animation: fadeIn 0.3s ease-in-out;
         }
+
         .message img {
             width: 40px;
             height: 40px;
             border-radius: 50%;
             margin-right: 10px;
         }
+
         .message.user {
             background-color: #cb658e;
             color: white;
             align-self: flex-end;
             flex-direction: row-reverse;
         }
+
         .message.user img {
             margin-left: 10px;
             margin-right: 0;
         }
+
         .message.assistant {
             background-color: #e9ecef;
             color: black;
             align-self: flex-start;
         }
+
         #input-container {
             display: flex;
             padding: 10px;
             background-color: white;
             border-top: 1px solid #ddd;
         }
+
         #input-container input {
             flex: 1;
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 5px;
         }
+
         #input-container button {
             margin-left: 10px;
-            padding: 8px 16px; /* Tamaño reducido */
+            padding: 10px 20px;
             background-color: #cb658e;
             color: white;
             border: none;
             border-radius: 5px;
         }
+
         #suggestions {
             margin-bottom: 10px;
         }
+
         #suggestions button {
             margin: 5px;
-            padding: 8px 12px; /* Tamaño reducido */
-            font-size: 14px; /* Fuente más pequeña */
+            padding: 10px 15px;
             background-color: #e9ecef;
             border: none;
             border-radius: 5px;
             cursor: pointer;
         }
+
         #suggestions button:hover {
             background-color: #cb658e;
             color: white;
         }
+
         @keyframes fadeIn {
             from {
                 opacity: 0;
                 transform: translateY(10px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
+
         body.dark-mode {
             background-color: #121212;
             color: #f1f1f1;
         }
+
         body.dark-mode .message.user {
             background-color: #bb4b6c;
         }
+
         body.dark-mode .message.assistant {
-            background-color: #333333; /* Ajustado para mejor contraste */
-            color: #f1f1f1;
-        }
-        body.dark-mode #input-container {
-            background-color: #1e1e1e;
-            border-top: 1px solid #333;
-        }
-        body.dark-mode #chat-container {
-            background-color: #1e1e1e;
-            border: 1px solid #333;
-        }
-        body.dark-mode #suggestions button {
-            background-color: #333;
-            color: #f1f1f1;
-        }
-        body.dark-mode #suggestions button:hover {
-            background-color: #bb4b6c;
+            background-color: #424242;
         }
     </style>
 </head>
 
 <body>
     <nav class="navbar navbar-expand-md sticky-top navbar-shrink py-3 navbar-light" id="mainNav">
-        <div class="container"><a class="navbar-brand d-flex align-items-center" href="/"><span><img src="assets/img/brands/logo_transparente.png" style="width: 64px;height: 64px;">Asistente EII</span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-2"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+        <div class="container"><a class="navbar-brand d-flex align-items-center" href="/"><span><img
+                        src="assets/img/brands/logo_transparente.png" style="width: 64px;height: 64px;">Asistente
+                    EII</span></a><button data-bs-toggle="collapse" class="navbar-toggler"
+                data-bs-target="#navcol-2"><span class="visually-hidden">Toggle navigation</span><span
+                    class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navcol-2">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
@@ -153,7 +157,8 @@
                 <div id="suggestions">
                     <button onclick="sendPredefinedMessage('¿Qué es la enfermedad de Crohn?')">¿Qué es la enfermedad de
                         Crohn?</button>
-                    <button onclick="sendPredefinedMessage('¿Cuáles son los síntomas más frecuentes en una EII?')">Síntomas
+                    <button
+                        onclick="sendPredefinedMessage('¿Cuáles son los síntomas más frecuentes en una EII?')">Síntomas
                         de una EII</button>
                     <button onclick="sendPredefinedMessage('¿Qué tratamientos existen para la EII?')">Tratamientos para
                         la EII</button>
@@ -195,8 +200,11 @@
                         <li><a href="privacy_policy.html">Política de privacidad</a></li>
                     </ul>
                 </div>
-                <div class="col-lg-3 text-center text-lg-start d-flex flex-column align-items-center order-first align-items-lg-start order-lg-last">
-                    <div class="fw-bold d-flex align-items-center mb-2"><img src="assets/img/brands/logo_transparente.png" width="64" height="64"><span>Asistente EII</span></div>
+                <div
+                    class="col-lg-3 text-center text-lg-start d-flex flex-column align-items-center order-first align-items-lg-start order-lg-last">
+                    <div class="fw-bold d-flex align-items-center mb-2"><img
+                            src="assets/img/brands/logo_transparente.png" width="64" height="64"><span>Asistente
+                            EII</span></div>
                     <p class="text-muted">Tu aliado en tu lucha contra las EIIs</p>
                 </div>
             </div>
@@ -204,9 +212,12 @@
             <div class="text-muted d-flex justify-content-between align-items-center pt-3">
                 <p class="mb-0">Copyright © 2024 Asistente EII</p>
                 <ul class="list-inline mb-0">
-                    <li class="list-inline-item"><a href="https://twitter.com/asistente_crohn"><i class="fab fa-twitter"></i></a></li>
-                    <li class="list-inline-item"><a href="https://www.instagram.com/ibdassistant"><i class="fab fa-instagram"></i></a></li>
-                    <li class="list-inline-item"><a href="https://linktr.ee/ibdassistant"><i class="fas fa-link"></i></a></li>
+                    <li class="list-inline-item"><a href="https://twitter.com/asistente_crohn"><i
+                                class="fab fa-twitter"></i></a></li>
+                    <li class="list-inline-item"><a href="https://www.instagram.com/ibdassistant"><i
+                                class="fab fa-instagram"></i></a></li>
+                    <li class="list-inline-item"><a href="https://linktr.ee/ibdassistant"><i
+                                class="fas fa-link"></i></a></li>
                 </ul>
             </div>
         </div>
@@ -233,11 +244,138 @@
 
             chatContainer.appendChild(messageDiv);
             chatContainer.scrollTop = chatContainer.scrollHeight; // Desplazar hacia el último mensaje
+            renderEmojis();
+            saveChatHistory();
+        }
+
+        async function addTypingIndicator() {
+            const typingIndicator = document.createElement("div");
+            typingIndicator.classList.add("message", "assistant");
+            typingIndicator.textContent = "Flatus está escribiendo...";
+            chatContainer.appendChild(typingIndicator);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+            return typingIndicator;
+        }
+
+        function removeTypingIndicator(indicator) {
+            chatContainer.removeChild(indicator);
+        }
+
+        async function sendPredefinedMessage(message) {
+            userInput.value = message;
+            sendButton.click();
+        }
+
+        function saveChatHistory() {
+            const messages = Array.from(chatContainer.children).map((msg) => {
+                const role = msg.classList.contains("user") ? "Usuario" : "Flatus";
+                const content = msg.querySelector("span").textContent;
+                const timestamp = msg.getAttribute("data-timestamp");
+                return { role, content, timestamp }; // Guardamos como un objeto JSON
+            });
+            localStorage.setItem("chatHistory", JSON.stringify(messages));
+        }
+
+
+        function loadChatHistory() {
+            const savedMessages = JSON.parse(localStorage.getItem("chatHistory")) || [];
+            savedMessages.forEach((msg) => {
+                const { role, content, timestamp } = msg; // Extraemos los datos directamente del objeto
+                addMessageWithTimestamp(content, role === "Usuario" ? "user" : "assistant", timestamp);
+            });
+        }
+
+        function clearChat() {
+            // Elimina todos los elementos hijos del contenedor de chat
+            while (chatContainer.firstChild) {
+                chatContainer.removeChild(chatContainer.firstChild);
+            }
+            // Limpia el historial almacenado en localStorage
+            localStorage.removeItem("chatHistory");
+            console.log("Chat eliminado.");
+        }
+
+
+
+        function addMessageWithTimestamp(content, role, timestamp = new Date().toLocaleString()) {
+            const messageDiv = document.createElement("div");
+            messageDiv.classList.add("message", role);
+            messageDiv.setAttribute("data-timestamp", timestamp);
+
+            const img = document.createElement("img");
+            img.src = role === "user" ? "/app/assets/user.png" : "/app/assets/flatus.png";
+
+            const text = document.createElement("span");
+            text.textContent = content;
+
+            messageDiv.appendChild(img);
+            messageDiv.appendChild(text);
+
+            chatContainer.appendChild(messageDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight; // Desplazar hacia el último mensaje
+            renderEmojis();
+        }
+
+        async function exportChat() {
+            const messages = Array.from(chatContainer.children).map((msg) => {
+                const role = msg.classList.contains("user") ? "Usuario" : "Flatus";
+                const content = msg.querySelector("span").textContent;
+                const timestamp = msg.getAttribute("data-timestamp");
+                return `${role} [${timestamp}]: ${content}`;
+            });
+            const blob = new Blob([messages.join("\n")], { type: "text/plain" });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = `chat_${new Date().toLocaleDateString().replace(/\//g, "-")}.txt`;
+            link.click();
+        }
+
+        function renderEmojis() {
+            twemoji.parse(chatContainer);
         }
 
         toggleButton.addEventListener("click", () => {
             document.body.classList.toggle("dark-mode");
         });
+
+        sendButton.addEventListener("click", async () => {
+            const userMessage = userInput.value.trim();
+            if (!userMessage) return;
+
+            const timestamp = new Date().toLocaleString();
+            addMessageWithTimestamp(userMessage, "user", timestamp);
+            userInput.value = "";
+
+            const typingIndicator = await addTypingIndicator();
+
+            try {
+                const response = await fetch("https://flatus-webapp.onrender.com/chat", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ message: userMessage }),
+                });
+                const data = await response.json();
+
+                removeTypingIndicator(typingIndicator);
+
+                if (data.reply) {
+                    addMessageWithTimestamp(data.reply, "assistant", new Date().toLocaleString());
+                } else {
+                    addMessageWithTimestamp("Lo siento, ocurrió un error. Inténtalo de nuevo más tarde.", "assistant", new Date().toLocaleString());
+                }
+            } catch (error) {
+                removeTypingIndicator(typingIndicator);
+                addMessageWithTimestamp("Error de conexión con el servidor. Inténtalo de nuevo.", "assistant", new Date().toLocaleString());
+            }
+        });
+
+        userInput.addEventListener("keypress", (event) => {
+            if (event.key === "Enter") {
+                sendButton.click();
+            }
+        });
+
+        window.onload = loadChatHistory;
     </script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/bs-init.js"></script>
