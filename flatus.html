@@ -104,6 +104,24 @@
             color: white;
         }
 
+        .btn-custom {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5px 10px;
+            font-size: 12px; /* Tamaño menor */
+            font-weight: normal; /* Sin negrita */
+            background-color: #cb658e;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            gap: 5px;
+        }
+        .btn-custom img {
+            width: 16px;
+            height: 16px;
+        }
+
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -167,9 +185,17 @@
                     <input id="user-input" type="text" placeholder="Escribe tu mensaje..." />
                     <button id="send-btn">Enviar</button>
                 </div>
-                <button onclick="exportChat()" class="btn btn-secondary mt-2">Exportar Conversación</button>
-                <button id="theme-toggle" class="btn btn-secondary mt-2">Modo Oscuro</button>
-                <button onclick="clearChat()" class="btn btn-danger mt-2">Vaciar Chat</button>
+                <div class="d-flex justify-content-between mt-3">
+                    <button onclick="exportChat()" class="btn-custom">
+                        <img src="/app/assets/export.png" alt="Exportar">Exportar
+                    </button>
+                    <button id="theme-toggle" class="btn-custom">
+                        <img src="/app/assets/switch_mode.png" alt="Modo Oscuro">Modo Oscuro
+                    </button>
+                    <button onclick="clearChat()" class="btn-custom">
+                        <img src="/app/assets/delete.png" alt="Vaciar">Vaciar Chat
+                    </button>
+                </div>
             </div>
         </div>
     </div>
