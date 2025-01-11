@@ -23,17 +23,32 @@
             border: 1px solid #ddd;
             border-radius: 10px;
             margin-bottom: 10px;
+            display: flex;
+            flex-direction: column;
         }
         .message {
+            display: flex;
+            align-items: center;
             max-width: 80%;
             margin-bottom: 10px;
             padding: 10px 15px;
             border-radius: 15px;
         }
+        .message img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
         .message.user {
-            background-color: #007bff;
+            background-color: #cb658e;
             color: white;
             align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+        .message.user img {
+            margin-left: 10px;
+            margin-right: 0;
         }
         .message.assistant {
             background-color: #e9ecef;
@@ -55,7 +70,7 @@
         #input-container button {
             margin-left: 10px;
             padding: 10px 20px;
-            background-color: #007bff;
+            background-color: #cb658e;
             color: white;
             border: none;
             border-radius: 5px;
@@ -140,7 +155,16 @@
         function addMessage(content, role) {
             const messageDiv = document.createElement("div");
             messageDiv.classList.add("message", role);
-            messageDiv.textContent = content;
+
+            const img = document.createElement("img");
+            img.src = role === "user" ? "/app/assets/user.png" : "/app/assets/flatus.png";
+
+            const text = document.createElement("span");
+            text.textContent = content;
+
+            messageDiv.appendChild(img);
+            messageDiv.appendChild(text);
+
             chatContainer.appendChild(messageDiv);
             chatContainer.scrollTop = chatContainer.scrollHeight; // Desplazar hacia el último mensaje
         }
