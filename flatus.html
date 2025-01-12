@@ -35,7 +35,8 @@
             background-color: #f7f7f7;
             border: 1px solid #ddd;
             border-radius: 10px;
-            margin-bottom: 10px; /* Espacio para evitar que el contenido se solape con el input */
+            margin-bottom: 10px;
+            max-height: calc(100vh - 180px); /* Ajuste dinámico para evitar que se estire demasiado */
         }
 
         .message {
@@ -78,9 +79,9 @@
             padding: 10px;
             background-color: white;
             border-top: 1px solid #ddd;
-            position: sticky;
-            bottom: 0;
-            margin-bottom: 60px; /* Ajuste manual para dejar espacio sobre el menú inferior */
+            position: fixed;
+            bottom: 60px; /* Espacio para ajustar sobre el menú */
+            width: 100%;
         }
 
         #input-container input {
