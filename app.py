@@ -4,7 +4,7 @@ from flask_cors import CORS
 from openai import OpenAI
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "https://ibdassistant.es"}})
 
 # Inicializar el cliente OpenAI
 client = OpenAI(
