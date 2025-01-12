@@ -37,7 +37,7 @@
             border: 1px solid #ddd;
             border-radius: 10px;
             margin-bottom: 10px;
-            max-height: calc(100vh - 130px); /* Ajusta para detener antes del input-container */
+            height: calc(100vh - 180px); /* Ajuste dinámico para evitar superposición con input-container */
         }
 
         .message {
@@ -83,6 +83,7 @@
             position: fixed;
             bottom: 0;
             width: 100%;
+            z-index: 1000; /* Asegurar que esté sobre el contenido */
         }
 
         #input-container input {
