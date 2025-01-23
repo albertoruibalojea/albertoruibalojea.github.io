@@ -1,0 +1,15 @@
+[
+    {
+      "relation": [
+        "delegate_permission/common.handle_all_urls",
+        "delegate_permission/common.get_login_creds"
+      ],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "com.aro.asistente_crohn",
+        "sha256_cert_fingerprints": [
+          "D8:15:83:C2:E1:1A:07:16:DE:17:9E:B8:15:40:07:14:79:98:D2:45:E5:B7:80:E6:A5:2F:D1:DB:F5:E0:5F:CE"
+        ]
+      }
+    }
+  ]
