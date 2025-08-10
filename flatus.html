@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Doctor Colóncio te responde</title>
+    <title>Flatus - Asistente EII</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Inter:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
@@ -221,24 +221,6 @@
     </div>
 
     <script src="https://unpkg.com/twemoji@latest/dist/twemoji.min.js"></script>
-        // Función para adaptar el estilo textual de Doctor Colóncio
-        function getColoncStyle(text) {
-            // Aquí puedes añadir frases, emojis, o modificar el texto para hacerlo más gamberro y educativo
-            // Ejemplo: añadir una frase motivadora y un emoji al final
-            const frases = [
-                "¡Recuerda, aquí no hay tabúes!",
-                "¡Tu salud intestinal mola mucho!",
-                "¡No te cortes, pregunta lo que quieras!",
-                "¡Doctor Colóncio al rescate!",
-                "¡Juntos contra el estigma!",
-                "¡El papel higiénico es nuestro escudo! 🧻",
-                "¡Aquí se habla claro y sin vergüenza!",
-                "¡La tripa no es tabú, es tema de conversación!"
-            ];
-            // Selecciona una frase aleatoria
-            const frase = frases[Math.floor(Math.random() * frases.length)];
-            return `${text}<br><span style='color:#cb658e;font-weight:bold;'>${frase}</span>`;
-        }
     <script>
         const chatContainer = document.getElementById("chat-container");
         const userInput = document.getElementById("user-input");
@@ -250,7 +232,7 @@
             messageDiv.classList.add("message", role);
 
             const img = document.createElement("img");
-            img.src = role === "user" ? "/app/assets/user.png" : "/app/assets/drColoncio.png";
+            img.src = role === "user" ? "/app/assets/user.png" : "/app/assets/flatus.png";
 
             const text = document.createElement("span");
             text.textContent = content;
@@ -267,7 +249,7 @@
         async function addTypingIndicator() {
             const typingIndicator = document.createElement("div");
             typingIndicator.classList.add("message", "assistant");
-            typingIndicator.textContent = "Dr. Colóncio está escribiendo...";
+            typingIndicator.textContent = "Flatus está escribiendo...";
             chatContainer.appendChild(typingIndicator);
             chatContainer.scrollTop = chatContainer.scrollHeight;
             return typingIndicator;
@@ -284,7 +266,7 @@
 
         function saveChatHistory() {
             const messages = Array.from(chatContainer.children).map((msg) => {
-                const role = msg.classList.contains("user") ? "Usuario" : "Dr. Colóncio";
+                const role = msg.classList.contains("user") ? "Usuario" : "Flatus";
                 const content = msg.querySelector("span").textContent;
                 const timestamp = msg.getAttribute("data-timestamp");
                 return { role, content, timestamp }; // Guardamos como un objeto JSON
@@ -319,19 +301,10 @@
             messageDiv.setAttribute("data-timestamp", timestamp);
 
             const img = document.createElement("img");
-            if (role === "user") {
-                img.src = "/app/assets/user.png";
-            } else {
-                img.src = "/app/assets/drColoncio.png"; // Cambia la imagen si tienes una de Doctor Colóncio
-            }
+            img.src = role === "user" ? "/app/assets/user.png" : "/app/assets/flatus.png";
 
             const text = document.createElement("span");
-            if (role === "assistant") {
-                // Referencia visual y estilo Doctor Colóncio
-                text.innerHTML = `🟢👨‍⚕️ <b>Doctor Colóncio</b> <span style='font-size:16px;'>🧻</span><br><span style='font-style:italic;'>${getColoncStyle(content)}</span>`;
-            } else {
-                text.textContent = content;
-            }
+            text.textContent = content;
 
             messageDiv.appendChild(img);
             messageDiv.appendChild(text);
@@ -343,7 +316,7 @@
 
         async function exportChat() {
             const messages = Array.from(chatContainer.children).map((msg) => {
-                const role = msg.classList.contains("user") ? "Usuario" : "Dr. Colóncio";
+                const role = msg.classList.contains("user") ? "Usuario" : "Flatus";
                 const content = msg.querySelector("span").textContent;
                 const timestamp = msg.getAttribute("data-timestamp");
                 return `${role} [${timestamp}]: ${content}`;
@@ -386,11 +359,11 @@
                 if (data.reply) {
                     addMessageWithTimestamp(data.reply, "assistant", new Date().toLocaleString());
                 } else {
-                    addMessageWithTimestamp("¡Vaya! Doctor Colóncio se ha tropezado con un rollo de papel... Inténtalo de nuevo más tarde.", "assistant", new Date().toLocaleString());
+                    addMessageWithTimestamp("Lo siento, ocurrió un error. Inténtalo de nuevo más tarde.", "assistant", new Date().toLocaleString());
                 }
             } catch (error) {
                 removeTypingIndicator(typingIndicator);
-                addMessageWithTimestamp("Ups, parece que Doctor Colóncio está luchando contra Tabucio y no puede responder ahora. Inténtalo de nuevo.", "assistant", new Date().toLocaleString());
+                addMessageWithTimestamp("Error de conexión con el servidor. Inténtalo de nuevo.", "assistant", new Date().toLocaleString());
             }
         });
 
