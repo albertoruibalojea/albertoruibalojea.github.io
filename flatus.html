@@ -943,68 +943,6 @@
             closeExportMenu();
         }
 
-        function exportAsHTML(messages) {
-            const htmlContent = `
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Chat con Doctor Colóncio</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        .message { margin: 10px 0; padding: 10px; border-radius: 8px; }
-        .user { background-color: #f0f0f0; }
-        .assistant { background-color: #e3f2fd; }
-        .timestamp { color: #666; font-size: 12px; }
-        .category { background-color: #cb658e; color: white; padding: 2px 8px; border-radius: 12px; font-size: 10px; }
-    </style>
-</head>
-<body>
-    <h1>Chat con Doctor Colóncio</h1>
-    <p><strong>Fecha de exportación:</strong> ${new Date().toLocaleString()}</p>
-    <p><strong>Total de mensajes:</strong> ${messages.length}</p>
-    <hr>
-    ${messages.map(msg => `
-        <div class="message ${msg.role === 'Usuario' ? 'user' : 'assistant'}">
-            <div class="timestamp">${msg.timestamp}</div>
-            <span class="category">${msg.category}</span>
-            <strong>${msg.role}:</strong> ${msg.content}
-        </div>
-    `).join('')}
-</body>
-</html>`;
-
-            downloadFile(htmlContent, `chat_${new Date().toLocaleDateString().replace(/\//g, "-")}.html`, "text/html");
-            closeExportMenu();
-        }
-
-        function exportAsSummary(messages) {
-            const userMessages = messages.filter(msg => msg.role === 'Usuario');
-            const categories = {};
-
-            userMessages.forEach(msg => {
-                const category = msg.category;
-                if (!categories[category]) categories[category] = [];
-                categories[category].push(msg.content);
-            });
-
-            let summary = `RESUMEN DEL CHAT - Doctor Colóncio\n`;
-            summary += `Fecha: ${new Date().toLocaleDateString()}\n`;
-            summary += `Total de mensajes: ${messages.length}\n`;
-            summary += `Mensajes del usuario: ${userMessages.length}\n\n`;
-
-            summary += `CATEGORÍAS CONSULTADAS:\n`;
-            for (const [category, contents] of Object.entries(categories)) {
-                summary += `\n${category} (${contents.length} consultas):\n`;
-                contents.forEach(content => {
-                    summary += `  • ${content}\n`;
-                });
-            }
-
-            downloadFile(summary, `resumen_chat_${new Date().toLocaleDateString().replace(/\//g, "-")}.txt`, "text/plain");
-            closeExportMenu();
-        }
-
         function downloadFile(content, filename, mimeType) {
             const blob = new Blob([content], { type: mimeType });
             const link = document.createElement("a");
