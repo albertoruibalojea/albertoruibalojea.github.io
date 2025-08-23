@@ -15,7 +15,8 @@
     <link rel="stylesheet" href="assets/css/Team-icons.css">
     <link rel="stylesheet" href="assets/css/Team-images.css">
     <style>
-        html, body {
+        html,
+        body {
             height: 100%;
             margin: 0;
             display: flex;
@@ -34,7 +35,8 @@
             overflow-y: auto;
             padding: 10px;
             margin-bottom: 10px;
-            height: calc(68vh - 180px); /* Ajuste dinámico para evitar superposición con input-container */
+            height: calc(68vh - 180px);
+            /* Ajuste dinámico para evitar superposición con input-container */
         }
 
         .message {
@@ -82,7 +84,8 @@
             position: fixed;
             bottom: 120px;
             width: 100%;
-            z-index: 1000; /* Asegurar que esté sobre el contenido */
+            z-index: 1000;
+            /* Asegurar que esté sobre el contenido */
         }
 
         #input-container input {
@@ -239,9 +242,17 @@
         }
 
         @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+
+            100% {
+                opacity: 1;
+            }
         }
 
         /* Estilos para modo oscuro */
@@ -270,6 +281,21 @@
 
         .message {
             position: relative;
+            font-size: 1.1rem; /* Aumenta el tamaño de letra */
+            word-break: break-word; /* Evita que el texto se salga de la burbuja */
+            white-space: pre-line;  /* Respeta saltos de línea */
+            max-width: 95vw;        /* Mejor para móviles */
+        }
+        
+        @media (max-width: 600px) {
+            .message {
+                font-size: 1.2rem;
+                padding: 12px 10px;
+                max-width: 98vw;
+            }
+            #input-container input {
+                font-size: 1.1rem;
+            }
         }
 
         body.dark-mode .category-tag {
@@ -460,7 +486,8 @@
                     <div id="suggestions">
                         <div class="suggestions-header">
                             <span>💡 Sugerencias inteligentes</span>
-                            <button onclick="refreshSuggestions()" class="refresh-suggestions" title="Actualizar sugerencias">
+                            <button onclick="refreshSuggestions()" class="refresh-suggestions"
+                                title="Actualizar sugerencias">
                                 🔄
                             </button>
                         </div>
@@ -591,7 +618,7 @@
         function analyzeChatContext() {
             const messages = Array.from(chatContainer.children);
             const userMessages = messages.filter(msg => msg.classList.contains('user'));
-            
+
             if (userMessages.length === 0) {
                 return { categories: [], context: 'new_user' };
             }
@@ -600,19 +627,19 @@
             const recentMessages = userMessages.slice(-5);
             const categories = new Set();
             const keywords = new Set();
-            
+
             recentMessages.forEach(msg => {
                 const category = msg.getAttribute('data-category');
                 if (category) categories.add(category);
-                
+
                 const content = msg.querySelector('span').textContent.toLowerCase();
                 // Extraer palabras clave
                 const words = content.split(/\s+/).filter(word => word.length > 3);
                 words.forEach(word => keywords.add(word));
             });
 
-            return { 
-                categories: Array.from(categories), 
+            return {
+                categories: Array.from(categories),
                 keywords: Array.from(keywords),
                 context: 'ongoing_conversation'
             };
@@ -621,7 +648,7 @@
         function generateSmartSuggestions() {
             const context = analyzeChatContext();
             const suggestions = [];
-            
+
             // Si es un usuario nuevo, mostrar sugerencias básicas
             if (context.context === 'new_user' || context.categories.length === 0) {
                 return defaultSuggestions;
@@ -658,9 +685,9 @@
         function renderSuggestions() {
             const container = document.getElementById('suggestions-container');
             const suggestions = generateSmartSuggestions();
-            
+
             container.innerHTML = '';
-            
+
             suggestions.forEach(suggestion => {
                 const button = document.createElement('button');
                 button.className = 'suggestion-btn';
@@ -677,7 +704,7 @@
         async function sendPredefinedMessage(message) {
             userInput.value = message;
             sendButton.click();
-            
+
             // Regenerar sugerencias después de enviar un mensaje
             setTimeout(renderSuggestions, 1000);
         }
@@ -736,7 +763,7 @@
             const messageDiv = document.createElement("div");
             messageDiv.classList.add("message", role);
             messageDiv.setAttribute("data-timestamp", timestamp);
-            
+
             // Categorizar el mensaje
             const category = categorizeMessage(content);
             messageDiv.setAttribute("data-category", category);
@@ -776,6 +803,9 @@
             return labels[category] || '💬 General';
         }
 
+        // ...existing code...
+        let exportMessages = [];
+
         async function exportChat() {
             const messages = Array.from(chatContainer.children).map((msg) => {
                 const role = msg.classList.contains("user") ? "Usuario" : "Doctor Colóncio";
@@ -783,7 +813,7 @@
                 const timestamp = msg.getAttribute("data-timestamp");
                 const category = msg.getAttribute("data-category");
                 const categoryLabel = getCategoryLabel(category);
-                
+
                 return {
                     role,
                     content,
@@ -792,50 +822,119 @@
                 };
             });
 
+            // Guardar mensajes en variable global temporal
+            exportMessages = messages;
+
             // Crear menú de exportación
             const exportMenu = document.createElement("div");
             exportMenu.className = "export-menu";
             exportMenu.innerHTML = `
-                <div class="export-menu-content">
-                    <h6>Exportar Chat</h6>
-                    <button onclick="exportAsText(${JSON.stringify(messages)})" class="export-btn">
-                        📄 Texto (.txt)
-                    </button>
-                    <button onclick="exportAsCSV(${JSON.stringify(messages)})" class="export-btn">
-                        📊 CSV (.csv)
-                    </button>
-                    <button onclick="exportAsHTML(${JSON.stringify(messages)})" class="export-btn">
-                        🌐 HTML (.html)
-                    </button>
-                    <button onclick="exportAsSummary(${JSON.stringify(messages)})" class="export-btn">
-                        📋 Resumen (.txt)
-                    </button>
-                    <button onclick="closeExportMenu()" class="export-btn cancel">
-                        ❌ Cancelar
-                    </button>
-                </div>
-            `;
+        <div class="export-menu-content">
+            <h6>Exportar Chat</h6>
+            <button onclick="exportAsText()" class="export-btn">
+                📄 Texto (.txt)
+            </button>
+            <button onclick="exportAsCSV()" class="export-btn">
+                📊 CSV (.csv)
+            </button>
+            <button onclick="exportAsHTML()" class="export-btn">
+                🌐 HTML (.html)
+            </button>
+            <button onclick="exportAsSummary()" class="export-btn">
+                📋 Resumen (.txt)
+            </button>
+            <button onclick="closeExportMenu()" class="export-btn cancel">
+                ❌ Cancelar
+            </button>
+        </div>
+    `;
 
             // Mostrar menú
             document.body.appendChild(exportMenu);
         }
 
-        function exportAsText(messages) {
-            const content = messages.map(msg => 
+        function exportAsText() {
+            const messages = exportMessages;
+            const content = messages.map(msg =>
                 `${msg.role} [${msg.timestamp}] (${msg.category}): ${msg.content}`
             ).join("\n");
-            
+
             downloadFile(content, `chat_${new Date().toLocaleDateString().replace(/\//g, "-")}.txt`, "text/plain");
             closeExportMenu();
         }
 
-        function exportAsCSV(messages) {
+        function exportAsCSV() {
+            const messages = exportMessages;
             const headers = "Rol,Fecha,Categoría,Contenido\n";
-            const content = headers + messages.map(msg => 
+            const content = headers + messages.map(msg =>
                 `"${msg.role}","${msg.timestamp}","${msg.category}","${msg.content.replace(/"/g, '""')}"`
             ).join("\n");
-            
+
             downloadFile(content, `chat_${new Date().toLocaleDateString().replace(/\//g, "-")}.csv`, "text/csv");
+            closeExportMenu();
+        }
+
+        function exportAsHTML() {
+            const messages = exportMessages;
+            const htmlContent = `
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Chat con Doctor Colóncio</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .message { margin: 10px 0; padding: 10px; border-radius: 8px; }
+        .user { background-color: #f0f0f0; }
+        .assistant { background-color: #e3f2fd; }
+        .timestamp { color: #666; font-size: 12px; }
+        .category { background-color: #cb658e; color: white; padding: 2px 8px; border-radius: 12px; font-size: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Chat con Doctor Colóncio</h1>
+    <p><strong>Fecha de exportación:</strong> ${new Date().toLocaleString()}</p>
+    <p><strong>Total de mensajes:</strong> ${messages.length}</p>
+    <hr>
+    ${messages.map(msg => `
+        <div class="message ${msg.role === 'Usuario' ? 'user' : 'assistant'}">
+            <div class="timestamp">${msg.timestamp}</div>
+            <span class="category">${msg.category}</span>
+            <strong>${msg.role}:</strong> ${msg.content}
+        </div>
+    `).join('')}
+</body>
+</html>`;
+
+            downloadFile(htmlContent, `chat_${new Date().toLocaleDateString().replace(/\//g, "-")}.html`, "text/html");
+            closeExportMenu();
+        }
+
+        function exportAsSummary() {
+            const messages = exportMessages;
+            const userMessages = messages.filter(msg => msg.role === 'Usuario');
+            const categories = {};
+
+            userMessages.forEach(msg => {
+                const category = msg.category;
+                if (!categories[category]) categories[category] = [];
+                categories[category].push(msg.content);
+            });
+
+            let summary = `RESUMEN DEL CHAT - Doctor Colóncio\n`;
+            summary += `Fecha: ${new Date().toLocaleDateString()}\n`;
+            summary += `Total de mensajes: ${messages.length}\n`;
+            summary += `Mensajes del usuario: ${userMessages.length}\n\n`;
+
+            summary += `CATEGORÍAS CONSULTADAS:\n`;
+            for (const [category, contents] of Object.entries(categories)) {
+                summary += `\n${category} (${contents.length} consultas):\n`;
+                contents.forEach(content => {
+                    summary += `  • ${content}\n`;
+                });
+            }
+
+            downloadFile(summary, `resumen_chat_${new Date().toLocaleDateString().replace(/\//g, "-")}.txt`, "text/plain");
             closeExportMenu();
         }
 
@@ -869,7 +968,7 @@
     `).join('')}
 </body>
 </html>`;
-            
+
             downloadFile(htmlContent, `chat_${new Date().toLocaleDateString().replace(/\//g, "-")}.html`, "text/html");
             closeExportMenu();
         }
@@ -877,7 +976,7 @@
         function exportAsSummary(messages) {
             const userMessages = messages.filter(msg => msg.role === 'Usuario');
             const categories = {};
-            
+
             userMessages.forEach(msg => {
                 const category = msg.category;
                 if (!categories[category]) categories[category] = [];
@@ -888,7 +987,7 @@
             summary += `Fecha: ${new Date().toLocaleDateString()}\n`;
             summary += `Total de mensajes: ${messages.length}\n`;
             summary += `Mensajes del usuario: ${userMessages.length}\n\n`;
-            
+
             summary += `CATEGORÍAS CONSULTADAS:\n`;
             for (const [category, contents] of Object.entries(categories)) {
                 summary += `\n${category} (${contents.length} consultas):\n`;
@@ -896,7 +995,7 @@
                     summary += `  • ${content}\n`;
                 });
             }
-            
+
             downloadFile(summary, `resumen_chat_${new Date().toLocaleDateString().replace(/\//g, "-")}.txt`, "text/plain");
             closeExportMenu();
         }
@@ -939,7 +1038,7 @@
                 "No hay pregunta tonta, solo intestinos tímidos 🤫",
                 "Si no te ríes de tu digestión, ella se reirá de ti 😂"
             ],
-            
+
             // Respuestas para diferentes tipos de consultas
             responses: {
                 sintomas: [
@@ -977,7 +1076,7 @@
                     "¡Bravo! Estás haciendo las preguntas que muchos se callan 🎉"
                 ]
             },
-            
+
             // Chistes escatológicos (siempre con buen gusto)
             jokes: [
                 "¿Sabes por qué los médicos usan estetoscopios? ¡Para escuchar los chismes del intestino! 🩺",
@@ -990,7 +1089,7 @@
         function addDoctorPersonality(reply, userMessage) {
             const lowerMessage = userMessage.toLowerCase();
             let enhancedReply = reply;
-            
+
             // Detectar el tipo de consulta con más precisión
             let category = 'general';
             const keywords = {
@@ -999,14 +1098,14 @@
                 dieta: ['comida', 'alimento', 'dieta', 'nutrición', 'vitamina', 'suplemento', 'intolerancia', 'alergia', 'comer', 'ingerir'],
                 emergencia: ['urgencia', 'grave', 'crítico', 'sangrado', 'fuerte', 'intenso', 'inmediato', 'sos', 'ayuda']
             };
-            
+
             for (const [cat, words] of Object.entries(keywords)) {
                 if (words.some(word => lowerMessage.includes(word))) {
                     category = cat;
                     break;
                 }
             }
-            
+
             // Agregar personalidad del doctor (siempre para emergencias, ocasional para el resto)
             if (category === 'emergencia' || Math.random() < 0.7) {
                 if (doctorPersonality.responses[category]) {
@@ -1015,21 +1114,21 @@
                     enhancedReply += `\n\n${randomResponse}`;
                 }
             }
-            
+
             // Agregar catchphrase ocasional (más frecuente para emergencias)
             const catchphraseChance = category === 'emergencia' ? 0.8 : 0.4;
             if (Math.random() < catchphraseChance) {
                 const catchphrase = doctorPersonality.catchphrases[Math.floor(Math.random() * doctorPersonality.catchphrases.length)];
                 enhancedReply += `\n\n💭 ${catchphrase}`;
             }
-            
+
             // Agregar chiste ocasional (menos frecuente para emergencias)
             const jokeChance = category === 'emergencia' ? 0.1 : 0.3;
             if (Math.random() < jokeChance) {
                 const joke = doctorPersonality.jokes[Math.floor(Math.random() * doctorPersonality.jokes.length)];
                 enhancedReply += `\n\n😄 ${joke}`;
             }
-            
+
             return enhancedReply;
         }
 
@@ -1077,11 +1176,11 @@
         function showWelcomeMessage() {
             // Verificar si es la primera vez que se abre el chat
             if (!localStorage.getItem("welcomeShown")) {
-                const welcomeMessage = "¡Hola! Soy el Doctor Colóncio, tu asistente especializado en EII. 🩺\n\n🚽 **Aviso importante:** Justo ahora estoy en el baño usando el papel higiénico. Dame 1 minuto para terminar y lavarme las manos, ¡luego responderé al instante!\n\n💭 *La caca no es tabú, es biología con ritmo!* 🎵\n\n¿En qué puedo ayudarte hoy? ¿Tu intestino tiene alguna pregunta escatológica que resolver? 😄";
-                
+                const welcomeMessage = "¡Hola! Soy el Doctor Colóncio, tu asistente especializado en EII. 🩺\n\n🚽 **Aviso importante:** Justo ahora estoy en el baño usando el papel higiénico. Dame 1 minuto para terminar y lavarme las manos, ¡luego responderé al instante!\n\n💭 \n\n¿En qué puedo ayudarte hoy?";
+
                 // Agregar el mensaje de bienvenida
                 addMessageWithTimestamp(welcomeMessage, "assistant", new Date().toLocaleString());
-                
+
                 // Marcar que ya se mostró el mensaje de bienvenida
                 localStorage.setItem("welcomeShown", "true");
             }
@@ -1095,7 +1194,7 @@
         function updateServerStatus(status, text) {
             const statusDot = document.getElementById('status-dot');
             const statusText = document.getElementById('status-text');
-            
+
             if (statusDot && statusText) {
                 statusDot.className = `status-dot ${status}`;
                 statusText.className = `status-text ${status}`;
@@ -1112,17 +1211,17 @@
                     body: JSON.stringify({ message: "ping" }),
                     signal: AbortSignal.timeout(5000) // 5 segundos timeout
                 });
-                
+
                 const endTime = Date.now();
                 const responseTime = endTime - startTime;
-                
+
                 if (response.ok) {
                     responseTimes.push(responseTime);
                     if (responseTimes.length > 10) responseTimes.shift(); // Mantener solo los últimos 10
-                    
+
                     const avgResponseTime = Math.round(responseTimes.reduce((a, b) => a + b, 0) / responseTimes.length);
                     lastResponseTime = avgResponseTime;
-                    
+
                     if (responseTime < 2000) {
                         updateServerStatus('online', `Activo (${avgResponseTime}ms)`);
                     } else {
@@ -1143,7 +1242,7 @@
         // Verificar estado del servidor cada 30 segundos
         setInterval(checkServerStatus, 30000);
 
-        window.onload = function() {
+        window.onload = function () {
             loadChatHistory();
             showWelcomeMessage();
             checkServerStatus(); // Verificar estado inicial
