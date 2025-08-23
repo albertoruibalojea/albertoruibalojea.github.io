@@ -523,61 +523,61 @@
         const suggestionDatabase = {
             sintomas: {
                 general: [
-                    '¿Cómo te sientes hoy?',
-                    '¿Has notado algún cambio en tus síntomas?',
-                    '¿Qué síntomas te preocupan más?'
+                    '¿Cómo puedo saber si mis síntomas son normales?',
+                    '¿Qué síntomas deberían preocuparme más?',
+                    '¿Cómo puedo controlar mejor mis síntomas?'
                 ],
                 dolor: [
-                    '¿Dónde sientes el dolor exactamente?',
-                    '¿El dolor es constante o intermitente?',
-                    '¿Qué intensidad tiene el dolor?'
+                    '¿Qué puedo hacer para aliviar el dolor?',
+                    '¿Cuándo debería preocuparme por el dolor?',
+                    '¿Hay ejercicios que ayuden con el dolor?'
                 ],
                 digestivos: [
-                    '¿Cómo están tus deposiciones últimamente?',
-                    '¿Tienes náuseas o vómitos?',
-                    '¿Has notado cambios en tu apetito?'
+                    '¿Qué cambios en mis deposiciones son normales?',
+                    '¿Cómo puedo mejorar mi digestión?',
+                    '¿Qué alimentos me ayudarán con las náuseas?'
                 ]
             },
             tratamiento: {
                 medicamentos: [
-                    '¿Tienes dudas sobre tu medicación actual?',
-                    '¿Has notado efectos secundarios?',
-                    '¿Te acuerdas de tomar tus medicamentos?'
+                    '¿Qué efectos secundarios puedo esperar?',
+                    '¿Cómo sé si mi medicación está funcionando?',
+                    '¿Qué hago si olvido tomar mi medicamento?'
                 ],
                 seguimiento: [
-                    '¿Cuándo fue tu última revisión médica?',
-                    '¿Tienes próxima cita programada?',
-                    '¿Necesitas ajustar tu tratamiento?'
+                    '¿Con qué frecuencia debo hacerme revisiones?',
+                    '¿Qué pruebas necesito regularmente?',
+                    '¿Cómo sé si mi tratamiento necesita ajustes?'
                 ]
             },
             dieta: {
                 general: [
-                    '¿Qué alimentos toleras mejor?',
-                    '¿Hay algo que te siente mal?',
-                    '¿Sigues alguna dieta específica?'
+                    '¿Qué dieta me recomiendas para la EII?',
+                    '¿Hay alimentos que debo evitar completamente?',
+                    '¿Cómo puedo mantener una dieta equilibrada?'
                 ],
                 suplementos: [
-                    '¿Tomas vitaminas o suplementos?',
-                    '¿Te han recomendado algún probiótico?',
-                    '¿Cómo te sientan los lácteos?'
+                    '¿Qué vitaminas me recomiendas tomar?',
+                    '¿Los probióticos me pueden ayudar?',
+                    '¿Qué suplementos son seguros para la EII?'
                 ]
             },
             vida_cotidiana: {
                 ejercicio: [
-                    '¿Haces algún tipo de ejercicio?',
-                    '¿El deporte afecta a tus síntomas?',
-                    '¿Qué actividades te sientan mejor?'
+                    '¿Qué tipo de ejercicio es seguro para mí?',
+                    '¿Cómo puedo hacer deporte sin empeorar mis síntomas?',
+                    '¿Qué actividades me recomiendas para mantenerme activo?'
                 ],
                 trabajo: [
-                    '¿Cómo afecta la EII a tu trabajo?',
-                    '¿Necesitas adaptaciones laborales?',
-                    '¿Cómo manejas el estrés laboral?'
+                    '¿Cómo puedo manejar la EII en el trabajo?',
+                    '¿Qué adaptaciones laborales puedo solicitar?',
+                    '¿Cómo manejo el estrés sin afectar mi enfermedad?'
                 ]
             },
             emergencia: [
-                '⚠️ ¿Tienes síntomas graves?',
-                '🚨 ¿Necesitas atención médica urgente?',
-                '📞 ¿Quieres que te ayude a decidir si ir al médico?'
+                '⚠️ ¿Qué síntomas requieren atención médica inmediata?',
+                '🚨 ¿Cuándo debo ir a urgencias?',
+                '📞 ¿Cómo sé si necesito llamar al médico?'
             ]
         };
 
@@ -925,6 +925,114 @@
             });
         }
 
+        // Personalidad del Doctor Colóncio - Sistema de respuestas inteligentes
+        const doctorPersonality = {
+            // Chistes y frases características
+            catchphrases: [
+                "¡La caca no es tabú, es biología con ritmo! 🎵",
+                "Si el intestino habla, hay que escucharlo 👂",
+                "Educar es evacuar prejuicios 💩",
+                "La ciencia entra mejor con una sonrisa 😄",
+                "Cada intestino es un universo. ¡Explóralo sin miedo! 🌌",
+                "El baño es un templo. Respétalo 🏛️",
+                "Tabucio se alimenta del silencio. Yo, de la verdad! 🗣️",
+                "No hay pregunta tonta, solo intestinos tímidos 🤫",
+                "Si no te ríes de tu digestión, ella se reirá de ti 😂"
+            ],
+            
+            // Respuestas para diferentes tipos de consultas
+            responses: {
+                sintomas: [
+                    "¡Ajá! Tu intestino está haciendo gimnasia sin avisar 🏃‍♂️",
+                    "Mira, si tu barriga suena como una orquesta, es que algo está pasando 🎼",
+                    "Cuando el dolor dice 'hola', hay que responderle con respeto 😤",
+                    "Tu estómago es como un GPS: cuando se pierde, te avisa con señales claras 🗺️",
+                    "Si tu barriga fuera un teléfono, estaría en modo vibración constante 📱"
+                ],
+                tratamiento: [
+                    "Los medicamentos son como amigos que vienen a ayudarte, pero hay que tratarlos bien 💊",
+                    "Si tu tratamiento fuera un restaurante, ¿qué estrella Michelin le darías? ⭐",
+                    "La medicación es como el papel higiénico: mejor tener de sobra 📜",
+                    "Tu tratamiento es como un plan de entrenamiento: constancia es la clave 🎯",
+                    "Los medicamentos son como superhéroes: cada uno tiene su poder especial 🦸‍♂️"
+                ],
+                dieta: [
+                    "La comida es como el combustible de tu nave espacial intestinal 🚀",
+                    "Algunos alimentos son como invitados problemáticos en tu fiesta digestiva 🎉",
+                    "Tu dieta es como un jardín: hay que regarla con conocimiento 🌱",
+                    "Los alimentos son como actores: algunos son protagonistas, otros son villanos 🎭",
+                    "Tu intestino es como un crítico gastronómico muy exigente 👨‍🍳"
+                ],
+                emergencia: [
+                    "🚨 ¡ALTO! Si tu barriga hace más ruido que un concierto de rock, llama al médico YA!",
+                    "⚠️ Cuando el dolor dice '¡SOS!', no le hagas caso omiso",
+                    "📞 Si tu intestino está en modo 'película de terror', es hora de pedir refuerzos",
+                    "🚑 Tu barriga no es una discoteca: si hace demasiado ruido, es señal de alarma",
+                    "⚡ Si el dolor es más intenso que un meme viral, busca ayuda profesional"
+                ],
+                general: [
+                    "¡Excelente pregunta! Tu intestino está orgulloso de tu curiosidad 🧠",
+                    "Me encanta cuando la gente pregunta sin miedo. ¡Así se aprende! 📚",
+                    "Tu pregunta demuestra que eres un experto en tu propio cuerpo 👏",
+                    "¡Bravo! Estás haciendo las preguntas que muchos se callan 🎉"
+                ]
+            },
+            
+            // Chistes escatológicos (siempre con buen gusto)
+            jokes: [
+                "¿Sabes por qué los médicos usan estetoscopios? ¡Para escuchar los chismes del intestino! 🩺",
+                "¿Qué dijo el papel higiénico al inodoro? '¡Nos vemos en la próxima evacuación!' 🧻",
+                "¿Por qué los probióticos son tan populares? ¡Porque son las estrellas del reality show intestinal! 🌟",
+                "¿Qué le dice un intestino sano a uno enfermo? '¡Tú también puedes ser normal!' 💪"
+            ]
+        };
+
+        function addDoctorPersonality(reply, userMessage) {
+            const lowerMessage = userMessage.toLowerCase();
+            let enhancedReply = reply;
+            
+            // Detectar el tipo de consulta con más precisión
+            let category = 'general';
+            const keywords = {
+                sintomas: ['dolor', 'síntoma', 'malestar', 'molestia', 'cólico', 'ardor', 'náusea', 'vómito', 'fiebre', 'cansancio'],
+                tratamiento: ['medicamento', 'medicina', 'fármaco', 'tratamiento', 'terapia', 'dosis', 'inyección', 'infusión', 'pastilla'],
+                dieta: ['comida', 'alimento', 'dieta', 'nutrición', 'vitamina', 'suplemento', 'intolerancia', 'alergia', 'comer', 'ingerir'],
+                emergencia: ['urgencia', 'grave', 'crítico', 'sangrado', 'fuerte', 'intenso', 'inmediato', 'sos', 'ayuda']
+            };
+            
+            for (const [cat, words] of Object.entries(keywords)) {
+                if (words.some(word => lowerMessage.includes(word))) {
+                    category = cat;
+                    break;
+                }
+            }
+            
+            // Agregar personalidad del doctor (siempre para emergencias, ocasional para el resto)
+            if (category === 'emergencia' || Math.random() < 0.7) {
+                if (doctorPersonality.responses[category]) {
+                    const responses = doctorPersonality.responses[category];
+                    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                    enhancedReply += `\n\n${randomResponse}`;
+                }
+            }
+            
+            // Agregar catchphrase ocasional (más frecuente para emergencias)
+            const catchphraseChance = category === 'emergencia' ? 0.8 : 0.4;
+            if (Math.random() < catchphraseChance) {
+                const catchphrase = doctorPersonality.catchphrases[Math.floor(Math.random() * doctorPersonality.catchphrases.length)];
+                enhancedReply += `\n\n💭 ${catchphrase}`;
+            }
+            
+            // Agregar chiste ocasional (menos frecuente para emergencias)
+            const jokeChance = category === 'emergencia' ? 0.1 : 0.3;
+            if (Math.random() < jokeChance) {
+                const joke = doctorPersonality.jokes[Math.floor(Math.random() * doctorPersonality.jokes.length)];
+                enhancedReply += `\n\n😄 ${joke}`;
+            }
+            
+            return enhancedReply;
+        }
+
         sendButton.addEventListener("click", async () => {
             const userMessage = userInput.value.trim();
             if (!userMessage) return;
@@ -946,13 +1054,17 @@
                 removeTypingIndicator(typingIndicator);
 
                 if (data.reply) {
-                    addMessageWithTimestamp(data.reply, "assistant", new Date().toLocaleString());
+                    // Aplicar personalidad del Doctor Colóncio
+                    const personalizedReply = addDoctorPersonality(data.reply, userMessage);
+                    addMessageWithTimestamp(personalizedReply, "assistant", new Date().toLocaleString());
                 } else {
-                    addMessageWithTimestamp("Lo siento, ocurrió un error. Inténtalo de nuevo más tarde.", "assistant", new Date().toLocaleString());
+                    const errorMessage = "¡Ups! Parece que mi cerebro digestivo tuvo un momento de 'estreñimiento mental'. 😅 Inténtalo de nuevo más tarde.";
+                    addMessageWithTimestamp(errorMessage, "assistant", new Date().toLocaleString());
                 }
             } catch (error) {
                 removeTypingIndicator(typingIndicator);
-                addMessageWithTimestamp("Error de conexión con el servidor. Inténtalo de nuevo.", "assistant", new Date().toLocaleString());
+                const connectionError = "¡Oh no! Mi conexión intestinal está fallando. 🚽 Es como cuando el WiFi del baño no funciona. Inténtalo de nuevo.";
+                addMessageWithTimestamp(connectionError, "assistant", new Date().toLocaleString());
             }
         });
 
@@ -965,7 +1077,7 @@
         function showWelcomeMessage() {
             // Verificar si es la primera vez que se abre el chat
             if (!localStorage.getItem("welcomeShown")) {
-                const welcomeMessage = "¡Hola! Soy el Doctor Colóncio, tu asistente especializado en EII. 🩺\n\n🚽 **Aviso importante:** Justo ahora estoy en el baño usando el papel higiénico. Dame 1 minuto para terminar y lavarme las manos, ¡luego responderé al instante!\n\n¿En qué puedo ayudarte hoy?";
+                const welcomeMessage = "¡Hola! Soy el Doctor Colóncio, tu asistente especializado en EII. 🩺\n\n🚽 **Aviso importante:** Justo ahora estoy en el baño usando el papel higiénico. Dame 1 minuto para terminar y lavarme las manos, ¡luego responderé al instante!\n\n💭 *La caca no es tabú, es biología con ritmo!* 🎵\n\n¿En qué puedo ayudarte hoy? ¿Tu intestino tiene alguna pregunta escatológica que resolver? 😄";
                 
                 // Agregar el mensaje de bienvenida
                 addMessageWithTimestamp(welcomeMessage, "assistant", new Date().toLocaleString());
