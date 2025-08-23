@@ -918,9 +918,12 @@
             twemoji.parse(chatContainer);
         }
 
-        toggleButton.addEventListener("click", () => {
-            document.body.classList.toggle("dark-mode");
-        });
+        // Event listener para el botón de tema (solo si existe)
+        if (toggleButton) {
+            toggleButton.addEventListener("click", () => {
+                document.body.classList.toggle("dark-mode");
+            });
+        }
 
         sendButton.addEventListener("click", async () => {
             const userMessage = userInput.value.trim();
