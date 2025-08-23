@@ -48,6 +48,10 @@
             box-sizing: border-box;
         }
 
+        #chat-container .message:last-child {
+            margin-bottom: 10px !important;
+        }
+
         #input-section {
             width: 100%;
             position: fixed;
@@ -67,8 +71,20 @@
             box-sizing: border-box;
         }
 
-        #chat-container .message:last-child {
-            margin-bottom: 10px !important;
+        #input-container input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        #input-container button {
+            margin-left: 10px;
+            padding: 10px 20px;
+            background-color: #cb658e;
+            color: white;
+            border: none;
+            border-radius: 5px;
         }
 
         .message {
@@ -111,22 +127,6 @@
             color: black;
             align-self: flex-start;
             text-align: left;
-        }
-
-        #input-container input {
-            flex: 1;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-
-        #input-container button {
-            margin-left: 10px;
-            padding: 10px 20px;
-            background-color: #cb658e;
-            color: white;
-            border: none;
-            border-radius: 5px;
         }
 
         #suggestions {
