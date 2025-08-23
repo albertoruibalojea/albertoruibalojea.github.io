@@ -24,25 +24,28 @@
         }
 
         #main-content {
-            flex: 1;
+            flex: 1 1 auto;
             display: flex;
             flex-direction: column;
+            min-height: 0;
+            height: 100vh;
             overflow: hidden;
         }
 
         #chat-section {
-            flex: 1;
+            flex: 1 1 auto;
             display: flex;
             flex-direction: column;
             min-height: 0;
+            height: 100%;
         }
 
         #chat-container {
-            flex: 1;
+            flex: 1 1 auto;
             overflow-y: auto;
             padding: 10px;
             margin-bottom: 0;
-            height: auto;
+            height: 100%;
             padding-bottom: 80px;
             /* Ajusta según la altura real del input */
             box-sizing: border-box;
