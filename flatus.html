@@ -39,6 +39,10 @@
             /* Ajuste dinámico para evitar superposición con input-container */
         }
 
+        #chat-container .message:last-child {
+            margin-bottom: 2px !important;
+        }
+
         .message {
             display: flex;
             align-items: center;
@@ -281,7 +285,7 @@
 
         .message {
             position: relative;
-            font-size: 1.1rem;
+            font-size: 0.8rem;
             /* Aumenta el tamaño de letra */
             word-break: break-word;
             /* Evita que el texto se salga de la burbuja */
@@ -289,17 +293,18 @@
             /* Respeta saltos de línea */
             max-width: 95vw;
             /* Mejor para móviles */
+            margin-bottom: 5px;
         }
 
         @media (max-width: 600px) {
             .message {
-                font-size: 1.2rem;
-                padding: 12px 10px;
+                font-size: 0.8rem;
+                padding: 10px 8px;
                 max-width: 98vw;
             }
 
             #input-container input {
-                font-size: 1.1rem;
+                font-size: 0.8rem;
             }
         }
 
