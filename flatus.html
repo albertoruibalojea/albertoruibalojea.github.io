@@ -30,13 +30,41 @@
             overflow: hidden;
         }
 
+        #chat-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+        }
+
         #chat-container {
             flex: 1;
             overflow-y: auto;
             padding: 10px;
-            margin-bottom: 10px;
-            height: calc(68vh - 180px);
-            /* Ajuste dinámico para evitar superposición con input-container */
+            margin-bottom: 0;
+            height: auto;
+            padding-bottom: 80px;
+            /* Ajusta según la altura real del input */
+            box-sizing: border-box;
+        }
+
+        #input-section {
+            width: 100%;
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: white;
+            z-index: 1000;
+        }
+
+        #input-container {
+            display: flex;
+            padding: 10px;
+            background-color: white;
+            border-top: 1px solid #ddd;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         #chat-container .message:last-child {
@@ -83,18 +111,6 @@
             color: black;
             align-self: flex-start;
             text-align: left;
-        }
-
-        #input-container {
-            display: flex;
-            padding: 10px;
-            background-color: white;
-            border-top: 1px solid #ddd;
-            position: fixed;
-            bottom: 120px;
-            width: 100%;
-            z-index: 1000;
-            /* Asegurar que esté sobre el contenido */
         }
 
         #input-container input {
@@ -510,340 +526,341 @@
                             <!-- Las sugerencias se generarán dinámicamente aquí -->
                         </div>
                     </div>
-                    <div id="chat-container">
-                        <!-- Los mensajes se agregarán aquí dinámicamente -->
+                    <div id="chat-section">
+                        <div id="chat-container">
+                            <!-- Los mensajes se agregarán aquí dinámicamente -->
+                        </div>
+                    </div>
+                    <div id="input-section">
+                        <div id="input-container">
+                            <input id="user-input" type="text" placeholder="Escribe tu mensaje..." />
+                            <button id="send-btn">Enviar</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div id="input-container">
-            <input id="user-input" type="text" placeholder="Escribe tu mensaje..." />
-            <button id="send-btn">Enviar</button>
-        </div>
-    </div>
 
-    <script src="https://unpkg.com/twemoji@latest/dist/twemoji.min.js"></script>
-    <script>
-        const chatContainer = document.getElementById("chat-container");
-        const userInput = document.getElementById("user-input");
-        const sendButton = document.getElementById("send-btn");
-        const toggleButton = document.getElementById("theme-toggle");
+                <script src="https://unpkg.com/twemoji@latest/dist/twemoji.min.js"></script>
+                <script>
+                    const chatContainer = document.getElementById("chat-container");
+                    const userInput = document.getElementById("user-input");
+                    const sendButton = document.getElementById("send-btn");
+                    const toggleButton = document.getElementById("theme-toggle");
 
-        function addMessage(content, role) {
-            const messageDiv = document.createElement("div");
-            messageDiv.classList.add("message", role);
+                    function addMessage(content, role) {
+                        const messageDiv = document.createElement("div");
+                        messageDiv.classList.add("message", role);
 
-            const img = document.createElement("img");
-            img.src = role === "user" ? "/app/assets/user.png" : "/app/assets/drColoncio.png";
+                        const img = document.createElement("img");
+                        img.src = role === "user" ? "/app/assets/user.png" : "/app/assets/drColoncio.png";
 
-            const text = document.createElement("span");
-            text.textContent = content;
+                        const text = document.createElement("span");
+                        text.textContent = content;
 
-            messageDiv.appendChild(img);
-            messageDiv.appendChild(text);
+                        messageDiv.appendChild(img);
+                        messageDiv.appendChild(text);
 
-            chatContainer.appendChild(messageDiv);
-            chatContainer.scrollTop = chatContainer.scrollHeight; // Desplazar hacia el último mensaje
-            renderEmojis();
-            saveChatHistory();
-        }
+                        chatContainer.appendChild(messageDiv);
+                        chatContainer.scrollTop = chatContainer.scrollHeight; // Desplazar hacia el último mensaje
+                        renderEmojis();
+                        saveChatHistory();
+                    }
 
-        async function addTypingIndicator() {
-            const typingIndicator = document.createElement("div");
-            typingIndicator.classList.add("message", "assistant");
-            typingIndicator.textContent = "Doctor Colóncio está escribiendo...";
-            chatContainer.appendChild(typingIndicator);
-            chatContainer.scrollTop = chatContainer.scrollHeight;
-            return typingIndicator;
-        }
+                    async function addTypingIndicator() {
+                        const typingIndicator = document.createElement("div");
+                        typingIndicator.classList.add("message", "assistant");
+                        typingIndicator.textContent = "Doctor Colóncio está escribiendo...";
+                        chatContainer.appendChild(typingIndicator);
+                        chatContainer.scrollTop = chatContainer.scrollHeight;
+                        return typingIndicator;
+                    }
 
-        function removeTypingIndicator(indicator) {
-            chatContainer.removeChild(indicator);
-        }
+                    function removeTypingIndicator(indicator) {
+                        chatContainer.removeChild(indicator);
+                    }
 
-        // Base de conocimiento para sugerencias inteligentes
-        const suggestionDatabase = {
-            sintomas: {
-                general: [
-                    '¿Cómo puedo saber si mis síntomas son normales?',
-                    '¿Qué síntomas deberían preocuparme más?',
-                    '¿Cómo puedo controlar mejor mis síntomas?'
-                ],
-                dolor: [
-                    '¿Qué puedo hacer para aliviar el dolor?',
-                    '¿Cuándo debería preocuparme por el dolor?',
-                    '¿Hay ejercicios que ayuden con el dolor?'
-                ],
-                digestivos: [
-                    '¿Qué cambios en mis deposiciones son normales?',
-                    '¿Cómo puedo mejorar mi digestión?',
-                    '¿Qué alimentos me ayudarán con las náuseas?'
-                ]
-            },
-            tratamiento: {
-                medicamentos: [
-                    '¿Qué efectos secundarios puedo esperar?',
-                    '¿Cómo sé si mi medicación está funcionando?',
-                    '¿Qué hago si olvido tomar mi medicamento?'
-                ],
-                seguimiento: [
-                    '¿Con qué frecuencia debo hacerme revisiones?',
-                    '¿Qué pruebas necesito regularmente?',
-                    '¿Cómo sé si mi tratamiento necesita ajustes?'
-                ]
-            },
-            dieta: {
-                general: [
-                    '¿Qué dieta me recomiendas para la EII?',
-                    '¿Hay alimentos que debo evitar completamente?',
-                    '¿Cómo puedo mantener una dieta equilibrada?'
-                ],
-                suplementos: [
-                    '¿Qué vitaminas me recomiendas tomar?',
-                    '¿Los probióticos me pueden ayudar?',
-                    '¿Qué suplementos son seguros para la EII?'
-                ]
-            },
-            vida_cotidiana: {
-                ejercicio: [
-                    '¿Qué tipo de ejercicio es seguro para mí?',
-                    '¿Cómo puedo hacer deporte sin empeorar mis síntomas?',
-                    '¿Qué actividades me recomiendas para mantenerme activo?'
-                ],
-                trabajo: [
-                    '¿Cómo puedo manejar la EII en el trabajo?',
-                    '¿Qué adaptaciones laborales puedo solicitar?',
-                    '¿Cómo manejo el estrés sin afectar mi enfermedad?'
-                ]
-            },
-            emergencia: [
-                '⚠️ ¿Qué síntomas requieren atención médica inmediata?',
-                '🚨 ¿Cuándo debo ir a urgencias?',
-                '📞 ¿Cómo sé si necesito llamar al médico?'
-            ]
-        };
+                    // Base de conocimiento para sugerencias inteligentes
+                    const suggestionDatabase = {
+                        sintomas: {
+                            general: [
+                                '¿Cómo puedo saber si mis síntomas son normales?',
+                                '¿Qué síntomas deberían preocuparme más?',
+                                '¿Cómo puedo controlar mejor mis síntomas?'
+                            ],
+                            dolor: [
+                                '¿Qué puedo hacer para aliviar el dolor?',
+                                '¿Cuándo debería preocuparme por el dolor?',
+                                '¿Hay ejercicios que ayuden con el dolor?'
+                            ],
+                            digestivos: [
+                                '¿Qué cambios en mis deposiciones son normales?',
+                                '¿Cómo puedo mejorar mi digestión?',
+                                '¿Qué alimentos me ayudarán con las náuseas?'
+                            ]
+                        },
+                        tratamiento: {
+                            medicamentos: [
+                                '¿Qué efectos secundarios puedo esperar?',
+                                '¿Cómo sé si mi medicación está funcionando?',
+                                '¿Qué hago si olvido tomar mi medicamento?'
+                            ],
+                            seguimiento: [
+                                '¿Con qué frecuencia debo hacerme revisiones?',
+                                '¿Qué pruebas necesito regularmente?',
+                                '¿Cómo sé si mi tratamiento necesita ajustes?'
+                            ]
+                        },
+                        dieta: {
+                            general: [
+                                '¿Qué dieta me recomiendas para la EII?',
+                                '¿Hay alimentos que debo evitar completamente?',
+                                '¿Cómo puedo mantener una dieta equilibrada?'
+                            ],
+                            suplementos: [
+                                '¿Qué vitaminas me recomiendas tomar?',
+                                '¿Los probióticos me pueden ayudar?',
+                                '¿Qué suplementos son seguros para la EII?'
+                            ]
+                        },
+                        vida_cotidiana: {
+                            ejercicio: [
+                                '¿Qué tipo de ejercicio es seguro para mí?',
+                                '¿Cómo puedo hacer deporte sin empeorar mis síntomas?',
+                                '¿Qué actividades me recomiendas para mantenerme activo?'
+                            ],
+                            trabajo: [
+                                '¿Cómo puedo manejar la EII en el trabajo?',
+                                '¿Qué adaptaciones laborales puedo solicitar?',
+                                '¿Cómo manejo el estrés sin afectar mi enfermedad?'
+                            ]
+                        },
+                        emergencia: [
+                            '⚠️ ¿Qué síntomas requieren atención médica inmediata?',
+                            '🚨 ¿Cuándo debo ir a urgencias?',
+                            '📞 ¿Cómo sé si necesito llamar al médico?'
+                        ]
+                    };
 
-        // Sugerencias por defecto para nuevos usuarios
-        const defaultSuggestions = [
-            '¿Qué es la enfermedad de Crohn?',
-            '¿Cuáles son los síntomas más frecuentes en una EII?',
-            '¿Cómo se diagnostica una EII?'
-        ];
+                    // Sugerencias por defecto para nuevos usuarios
+                    const defaultSuggestions = [
+                        '¿Qué es la enfermedad de Crohn?',
+                        '¿Cuáles son los síntomas más frecuentes en una EII?',
+                        '¿Cómo se diagnostica una EII?'
+                    ];
 
-        function analyzeChatContext() {
-            const messages = Array.from(chatContainer.children);
-            const userMessages = messages.filter(msg => msg.classList.contains('user'));
+                    function analyzeChatContext() {
+                        const messages = Array.from(chatContainer.children);
+                        const userMessages = messages.filter(msg => msg.classList.contains('user'));
 
-            if (userMessages.length === 0) {
-                return { categories: [], context: 'new_user' };
-            }
-
-            // Analizar los últimos 5 mensajes del usuario
-            const recentMessages = userMessages.slice(-5);
-            const categories = new Set();
-            const keywords = new Set();
-
-            recentMessages.forEach(msg => {
-                const category = msg.getAttribute('data-category');
-                if (category) categories.add(category);
-
-                const content = msg.querySelector('span').textContent.toLowerCase();
-                // Extraer palabras clave
-                const words = content.split(/\s+/).filter(word => word.length > 3);
-                words.forEach(word => keywords.add(word));
-            });
-
-            return {
-                categories: Array.from(categories),
-                keywords: Array.from(keywords),
-                context: 'ongoing_conversation'
-            };
-        }
-
-        function generateSmartSuggestions() {
-            const context = analyzeChatContext();
-            const suggestions = [];
-
-            // Si es un usuario nuevo, mostrar sugerencias básicas
-            if (context.context === 'new_user' || context.categories.length === 0) {
-                return defaultSuggestions;
-            }
-
-            // Generar sugerencias basadas en las categorías detectadas
-            context.categories.forEach(category => {
-                if (suggestionDatabase[category]) {
-                    const categorySuggestions = suggestionDatabase[category];
-                    // Tomar sugerencias de diferentes subcategorías
-                    Object.values(categorySuggestions).forEach(subSuggestions => {
-                        if (Array.isArray(subSuggestions)) {
-                            suggestions.push(...subSuggestions);
+                        if (userMessages.length === 0) {
+                            return { categories: [], context: 'new_user' };
                         }
-                    });
-                }
-            });
 
-            // Agregar sugerencias de emergencia si hay síntomas
-            if (context.categories.includes('sintomas')) {
-                suggestions.push(...suggestionDatabase.emergencia);
-            }
+                        // Analizar los últimos 5 mensajes del usuario
+                        const recentMessages = userMessages.slice(-5);
+                        const categories = new Set();
+                        const keywords = new Set();
 
-            // Agregar sugerencias de seguimiento si hay tratamiento
-            if (context.categories.includes('tratamiento')) {
-                suggestions.push(...suggestionDatabase.tratamiento.seguimiento);
-            }
+                        recentMessages.forEach(msg => {
+                            const category = msg.getAttribute('data-category');
+                            if (category) categories.add(category);
 
-            // Mezclar y limitar a 4 sugerencias
-            const shuffled = suggestions.sort(() => 0.5 - Math.random());
-            return shuffled.slice(0, 4);
-        }
+                            const content = msg.querySelector('span').textContent.toLowerCase();
+                            // Extraer palabras clave
+                            const words = content.split(/\s+/).filter(word => word.length > 3);
+                            words.forEach(word => keywords.add(word));
+                        });
 
-        function renderSuggestions() {
-            const container = document.getElementById('suggestions-container');
-            const suggestions = generateSmartSuggestions();
+                        return {
+                            categories: Array.from(categories),
+                            keywords: Array.from(keywords),
+                            context: 'ongoing_conversation'
+                        };
+                    }
 
-            container.innerHTML = '';
+                    function generateSmartSuggestions() {
+                        const context = analyzeChatContext();
+                        const suggestions = [];
 
-            suggestions.forEach(suggestion => {
-                const button = document.createElement('button');
-                button.className = 'suggestion-btn';
-                button.textContent = suggestion;
-                button.onclick = () => sendPredefinedMessage(suggestion);
-                container.appendChild(button);
-            });
-        }
+                        // Si es un usuario nuevo, mostrar sugerencias básicas
+                        if (context.context === 'new_user' || context.categories.length === 0) {
+                            return defaultSuggestions;
+                        }
 
-        function refreshSuggestions() {
-            renderSuggestions();
-        }
+                        // Generar sugerencias basadas en las categorías detectadas
+                        context.categories.forEach(category => {
+                            if (suggestionDatabase[category]) {
+                                const categorySuggestions = suggestionDatabase[category];
+                                // Tomar sugerencias de diferentes subcategorías
+                                Object.values(categorySuggestions).forEach(subSuggestions => {
+                                    if (Array.isArray(subSuggestions)) {
+                                        suggestions.push(...subSuggestions);
+                                    }
+                                });
+                            }
+                        });
 
-        async function sendPredefinedMessage(message) {
-            userInput.value = message;
-            sendButton.click();
+                        // Agregar sugerencias de emergencia si hay síntomas
+                        if (context.categories.includes('sintomas')) {
+                            suggestions.push(...suggestionDatabase.emergencia);
+                        }
 
-            // Regenerar sugerencias después de enviar un mensaje
-            setTimeout(renderSuggestions, 1000);
-        }
+                        // Agregar sugerencias de seguimiento si hay tratamiento
+                        if (context.categories.includes('tratamiento')) {
+                            suggestions.push(...suggestionDatabase.tratamiento.seguimiento);
+                        }
 
-        function saveChatHistory() {
-            const messages = Array.from(chatContainer.children).map((msg) => {
-                const role = msg.classList.contains("user") ? "Usuario" : "Doctor Colóncio";
-                const content = msg.querySelector("span").textContent;
-                const timestamp = msg.getAttribute("data-timestamp");
-                return { role, content, timestamp }; // Guardamos como un objeto JSON
-            });
-            localStorage.setItem("chatHistory", JSON.stringify(messages));
-        }
+                        // Mezclar y limitar a 4 sugerencias
+                        const shuffled = suggestions.sort(() => 0.5 - Math.random());
+                        return shuffled.slice(0, 4);
+                    }
+
+                    function renderSuggestions() {
+                        const container = document.getElementById('suggestions-container');
+                        const suggestions = generateSmartSuggestions();
+
+                        container.innerHTML = '';
+
+                        suggestions.forEach(suggestion => {
+                            const button = document.createElement('button');
+                            button.className = 'suggestion-btn';
+                            button.textContent = suggestion;
+                            button.onclick = () => sendPredefinedMessage(suggestion);
+                            container.appendChild(button);
+                        });
+                    }
+
+                    function refreshSuggestions() {
+                        renderSuggestions();
+                    }
+
+                    async function sendPredefinedMessage(message) {
+                        userInput.value = message;
+                        sendButton.click();
+
+                        // Regenerar sugerencias después de enviar un mensaje
+                        setTimeout(renderSuggestions, 1000);
+                    }
+
+                    function saveChatHistory() {
+                        const messages = Array.from(chatContainer.children).map((msg) => {
+                            const role = msg.classList.contains("user") ? "Usuario" : "Doctor Colóncio";
+                            const content = msg.querySelector("span").textContent;
+                            const timestamp = msg.getAttribute("data-timestamp");
+                            return { role, content, timestamp }; // Guardamos como un objeto JSON
+                        });
+                        localStorage.setItem("chatHistory", JSON.stringify(messages));
+                    }
 
 
-        function loadChatHistory() {
-            const savedMessages = JSON.parse(localStorage.getItem("chatHistory")) || [];
-            savedMessages.forEach((msg) => {
-                const { role, content, timestamp } = msg; // Extraemos los datos directamente del objeto
-                addMessageWithTimestamp(content, role === "Usuario" ? "user" : "assistant", timestamp);
-            });
-        }
+                    function loadChatHistory() {
+                        const savedMessages = JSON.parse(localStorage.getItem("chatHistory")) || [];
+                        savedMessages.forEach((msg) => {
+                            const { role, content, timestamp } = msg; // Extraemos los datos directamente del objeto
+                            addMessageWithTimestamp(content, role === "Usuario" ? "user" : "assistant", timestamp);
+                        });
+                    }
 
-        function clearChat() {
-            // Elimina todos los elementos hijos del contenedor de chat
-            while (chatContainer.firstChild) {
-                chatContainer.removeChild(chatContainer.firstChild);
-            }
-            // Limpia el historial almacenado en localStorage
-            localStorage.removeItem("chatHistory");
-            console.log("Chat eliminado.");
-        }
+                    function clearChat() {
+                        // Elimina todos los elementos hijos del contenedor de chat
+                        while (chatContainer.firstChild) {
+                            chatContainer.removeChild(chatContainer.firstChild);
+                        }
+                        // Limpia el historial almacenado en localStorage
+                        localStorage.removeItem("chatHistory");
+                        console.log("Chat eliminado.");
+                    }
 
 
 
-        function categorizeMessage(content) {
-            const lowerContent = content.toLowerCase();
-            const categories = {
-                'sintomas': ['dolor', 'diarrea', 'estreñimiento', 'náusea', 'vómito', 'fiebre', 'cansancio', 'pérdida de peso', 'sangrado'],
-                'tratamiento': ['medicamento', 'fármaco', 'terapia', 'tratamiento', 'dosis', 'inyección', 'infusión'],
-                'dieta': ['alimentación', 'comida', 'dieta', 'nutrición', 'vitaminas', 'suplementos', 'intolerancia', 'alergia'],
-                'diagnostico': ['prueba', 'análisis', 'endoscopia', 'colonoscopia', 'biopsia', 'resonancia', 'tomografía'],
-                'complicaciones': ['fístula', 'absceso', 'estenosis', 'perforación', 'cáncer', 'tumor'],
-                'vida_cotidiana': ['ejercicio', 'trabajo', 'viaje', 'deporte', 'estrés', 'ansiedad', 'depresión']
-            };
+                    function categorizeMessage(content) {
+                        const lowerContent = content.toLowerCase();
+                        const categories = {
+                            'sintomas': ['dolor', 'diarrea', 'estreñimiento', 'náusea', 'vómito', 'fiebre', 'cansancio', 'pérdida de peso', 'sangrado'],
+                            'tratamiento': ['medicamento', 'fármaco', 'terapia', 'tratamiento', 'dosis', 'inyección', 'infusión'],
+                            'dieta': ['alimentación', 'comida', 'dieta', 'nutrición', 'vitaminas', 'suplementos', 'intolerancia', 'alergia'],
+                            'diagnostico': ['prueba', 'análisis', 'endoscopia', 'colonoscopia', 'biopsia', 'resonancia', 'tomografía'],
+                            'complicaciones': ['fístula', 'absceso', 'estenosis', 'perforación', 'cáncer', 'tumor'],
+                            'vida_cotidiana': ['ejercicio', 'trabajo', 'viaje', 'deporte', 'estrés', 'ansiedad', 'depresión']
+                        };
 
-            for (const [category, keywords] of Object.entries(categories)) {
-                if (keywords.some(keyword => lowerContent.includes(keyword))) {
-                    return category;
-                }
-            }
-            return 'general';
-        }
+                        for (const [category, keywords] of Object.entries(categories)) {
+                            if (keywords.some(keyword => lowerContent.includes(keyword))) {
+                                return category;
+                            }
+                        }
+                        return 'general';
+                    }
 
-        function addMessageWithTimestamp(content, role, timestamp = new Date().toLocaleString()) {
-            const messageDiv = document.createElement("div");
-            messageDiv.classList.add("message", role);
-            messageDiv.setAttribute("data-timestamp", timestamp);
+                    function addMessageWithTimestamp(content, role, timestamp = new Date().toLocaleString()) {
+                        const messageDiv = document.createElement("div");
+                        messageDiv.classList.add("message", role);
+                        messageDiv.setAttribute("data-timestamp", timestamp);
 
-            // Categorizar el mensaje
-            const category = categorizeMessage(content);
-            messageDiv.setAttribute("data-category", category);
+                        // Categorizar el mensaje
+                        const category = categorizeMessage(content);
+                        messageDiv.setAttribute("data-category", category);
 
-            const img = document.createElement("img");
-            img.src = role === "user" ? "/app/assets/user.png" : "/app/assets/drColoncio.png";
+                        const img = document.createElement("img");
+                        img.src = role === "user" ? "/app/assets/user.png" : "/app/assets/drColoncio.png";
 
-            const text = document.createElement("span");
-            text.textContent = content;
+                        const text = document.createElement("span");
+                        text.textContent = content;
 
-            // Agregar etiqueta de categoría si es del usuario
-            if (role === "user") {
-                const categoryTag = document.createElement("div");
-                categoryTag.className = "category-tag";
-                categoryTag.textContent = getCategoryLabel(category);
-                messageDiv.appendChild(categoryTag);
-            }
+                        // Agregar etiqueta de categoría si es del usuario
+                        if (role === "user") {
+                            const categoryTag = document.createElement("div");
+                            categoryTag.className = "category-tag";
+                            categoryTag.textContent = getCategoryLabel(category);
+                            messageDiv.appendChild(categoryTag);
+                        }
 
-            messageDiv.appendChild(img);
-            messageDiv.appendChild(text);
+                        messageDiv.appendChild(img);
+                        messageDiv.appendChild(text);
 
-            chatContainer.appendChild(messageDiv);
-            chatContainer.scrollTop = chatContainer.scrollHeight;
-            renderEmojis();
-        }
+                        chatContainer.appendChild(messageDiv);
+                        chatContainer.scrollTop = chatContainer.scrollHeight;
+                        renderEmojis();
+                    }
 
-        function getCategoryLabel(category) {
-            const labels = {
-                'sintomas': '🩺 Síntomas',
-                'tratamiento': '💊 Tratamiento',
-                'dieta': '🍽️ Dieta',
-                'diagnostico': '🔬 Diagnóstico',
-                'complicaciones': '⚠️ Complicaciones',
-                'vida_cotidiana': '🏃 Vida Cotidiana',
-                'general': '💬 General'
-            };
-            return labels[category] || '💬 General';
-        }
+                    function getCategoryLabel(category) {
+                        const labels = {
+                            'sintomas': '🩺 Síntomas',
+                            'tratamiento': '💊 Tratamiento',
+                            'dieta': '🍽️ Dieta',
+                            'diagnostico': '🔬 Diagnóstico',
+                            'complicaciones': '⚠️ Complicaciones',
+                            'vida_cotidiana': '🏃 Vida Cotidiana',
+                            'general': '💬 General'
+                        };
+                        return labels[category] || '💬 General';
+                    }
 
-        // ...existing code...
-        let exportMessages = [];
+                    // ...existing code...
+                    let exportMessages = [];
 
-        async function exportChat() {
-            const messages = Array.from(chatContainer.children).map((msg) => {
-                const role = msg.classList.contains("user") ? "Usuario" : "Doctor Colóncio";
-                const content = msg.querySelector("span").textContent;
-                const timestamp = msg.getAttribute("data-timestamp");
-                const category = msg.getAttribute("data-category");
-                const categoryLabel = getCategoryLabel(category);
+                    async function exportChat() {
+                        const messages = Array.from(chatContainer.children).map((msg) => {
+                            const role = msg.classList.contains("user") ? "Usuario" : "Doctor Colóncio";
+                            const content = msg.querySelector("span").textContent;
+                            const timestamp = msg.getAttribute("data-timestamp");
+                            const category = msg.getAttribute("data-category");
+                            const categoryLabel = getCategoryLabel(category);
 
-                return {
-                    role,
-                    content,
-                    timestamp,
-                    category: categoryLabel
-                };
-            });
+                            return {
+                                role,
+                                content,
+                                timestamp,
+                                category: categoryLabel
+                            };
+                        });
 
-            // Guardar mensajes en variable global temporal
-            exportMessages = messages;
+                        // Guardar mensajes en variable global temporal
+                        exportMessages = messages;
 
-            // Crear menú de exportación
-            const exportMenu = document.createElement("div");
-            exportMenu.className = "export-menu";
-            exportMenu.innerHTML = `
+                        // Crear menú de exportación
+                        const exportMenu = document.createElement("div");
+                        exportMenu.className = "export-menu";
+                        exportMenu.innerHTML = `
         <div class="export-menu-content">
             <h6>Exportar Chat</h6>
             <button onclick="exportAsText()" class="export-btn">
@@ -864,34 +881,34 @@
         </div>
     `;
 
-            // Mostrar menú
-            document.body.appendChild(exportMenu);
-        }
+                        // Mostrar menú
+                        document.body.appendChild(exportMenu);
+                    }
 
-        function exportAsText() {
-            const messages = exportMessages;
-            const content = messages.map(msg =>
-                `${msg.role} [${msg.timestamp}] (${msg.category}): ${msg.content}`
-            ).join("\n");
+                    function exportAsText() {
+                        const messages = exportMessages;
+                        const content = messages.map(msg =>
+                            `${msg.role} [${msg.timestamp}] (${msg.category}): ${msg.content}`
+                        ).join("\n");
 
-            downloadFile(content, `chat_${new Date().toLocaleDateString().replace(/\//g, "-")}.txt`, "text/plain");
-            closeExportMenu();
-        }
+                        downloadFile(content, `chat_${new Date().toLocaleDateString().replace(/\//g, "-")}.txt`, "text/plain");
+                        closeExportMenu();
+                    }
 
-        function exportAsCSV() {
-            const messages = exportMessages;
-            const headers = "Rol,Fecha,Categoría,Contenido\n";
-            const content = headers + messages.map(msg =>
-                `"${msg.role}","${msg.timestamp}","${msg.category}","${msg.content.replace(/"/g, '""')}"`
-            ).join("\n");
+                    function exportAsCSV() {
+                        const messages = exportMessages;
+                        const headers = "Rol,Fecha,Categoría,Contenido\n";
+                        const content = headers + messages.map(msg =>
+                            `"${msg.role}","${msg.timestamp}","${msg.category}","${msg.content.replace(/"/g, '""')}"`
+                        ).join("\n");
 
-            downloadFile(content, `chat_${new Date().toLocaleDateString().replace(/\//g, "-")}.csv`, "text/csv");
-            closeExportMenu();
-        }
+                        downloadFile(content, `chat_${new Date().toLocaleDateString().replace(/\//g, "-")}.csv`, "text/csv");
+                        closeExportMenu();
+                    }
 
-        function exportAsHTML() {
-            const messages = exportMessages;
-            const htmlContent = `
+                    function exportAsHTML() {
+                        const messages = exportMessages;
+                        const htmlContent = `
 <!DOCTYPE html>
 <html>
 <head>
@@ -921,302 +938,302 @@
 </body>
 </html>`;
 
-            downloadFile(htmlContent, `chat_${new Date().toLocaleDateString().replace(/\//g, "-")}.html`, "text/html");
-            closeExportMenu();
-        }
-
-        function exportAsSummary() {
-            const messages = exportMessages;
-            const userMessages = messages.filter(msg => msg.role === 'Usuario');
-            const categories = {};
-
-            userMessages.forEach(msg => {
-                const category = msg.category;
-                if (!categories[category]) categories[category] = [];
-                categories[category].push(msg.content);
-            });
-
-            let summary = `RESUMEN DEL CHAT - Doctor Colóncio\n`;
-            summary += `Fecha: ${new Date().toLocaleDateString()}\n`;
-            summary += `Total de mensajes: ${messages.length}\n`;
-            summary += `Mensajes del usuario: ${userMessages.length}\n\n`;
-
-            summary += `CATEGORÍAS CONSULTADAS:\n`;
-            for (const [category, contents] of Object.entries(categories)) {
-                summary += `\n${category} (${contents.length} consultas):\n`;
-                contents.forEach(content => {
-                    summary += `  • ${content}\n`;
-                });
-            }
-
-            downloadFile(summary, `resumen_chat_${new Date().toLocaleDateString().replace(/\//g, "-")}.txt`, "text/plain");
-            closeExportMenu();
-        }
-
-        function downloadFile(content, filename, mimeType) {
-            const blob = new Blob([content], { type: mimeType });
-            const link = document.createElement("a");
-            link.href = URL.createObjectURL(blob);
-            link.download = filename;
-            link.click();
-        }
-
-        function closeExportMenu() {
-            const menu = document.querySelector('.export-menu');
-            if (menu) menu.remove();
-        }
-
-        function renderEmojis() {
-            twemoji.parse(chatContainer);
-        }
-
-        // Event listener para el botón de tema (solo si existe)
-        if (toggleButton) {
-            toggleButton.addEventListener("click", () => {
-                document.body.classList.toggle("dark-mode");
-            });
-        }
-
-        // Personalidad del Doctor Colóncio - Sistema de respuestas inteligentes
-        const doctorPersonality = {
-            // Chistes y frases características
-            catchphrases: [
-                "¡La caca no es tabú, es biología con ritmo! 🎵",
-                "Si el intestino habla, hay que escucharlo 👂",
-                "Educar es evacuar prejuicios 💩",
-                "La ciencia entra mejor con una sonrisa 😄",
-                "Cada intestino es un universo. ¡Explóralo sin miedo! 🌌",
-                "El baño es un templo. Respétalo 🏛️",
-                "Tabucio se alimenta del silencio. Yo, de la verdad! 🗣️",
-                "No hay pregunta tonta, solo intestinos tímidos 🤫",
-                "Si no te ríes de tu digestión, ella se reirá de ti 😂"
-            ],
-
-            // Respuestas para diferentes tipos de consultas
-            responses: {
-                sintomas: [
-                    "¡Ajá! Tu intestino está haciendo gimnasia sin avisar 🏃‍♂️",
-                    "Mira, si tu barriga suena como una orquesta, es que algo está pasando 🎼",
-                    "Cuando el dolor dice 'hola', hay que responderle con respeto 😤",
-                    "Tu estómago es como un GPS: cuando se pierde, te avisa con señales claras 🗺️",
-                    "Si tu barriga fuera un teléfono, estaría en modo vibración constante 📱"
-                ],
-                tratamiento: [
-                    "Los medicamentos son como amigos que vienen a ayudarte, pero hay que tratarlos bien 💊",
-                    "Si tu tratamiento fuera un restaurante, ¿qué estrella Michelin le darías? ⭐",
-                    "La medicación es como el papel higiénico: mejor tener de sobra 📜",
-                    "Tu tratamiento es como un plan de entrenamiento: constancia es la clave 🎯",
-                    "Los medicamentos son como superhéroes: cada uno tiene su poder especial 🦸‍♂️"
-                ],
-                dieta: [
-                    "La comida es como el combustible de tu nave espacial intestinal 🚀",
-                    "Algunos alimentos son como invitados problemáticos en tu fiesta digestiva 🎉",
-                    "Tu dieta es como un jardín: hay que regarla con conocimiento 🌱",
-                    "Los alimentos son como actores: algunos son protagonistas, otros son villanos 🎭",
-                    "Tu intestino es como un crítico gastronómico muy exigente 👨‍🍳"
-                ],
-                emergencia: [
-                    "🚨 ¡ALTO! Si tu barriga hace más ruido que un concierto de rock, llama al médico YA!",
-                    "⚠️ Cuando el dolor dice '¡SOS!', no le hagas caso omiso",
-                    "📞 Si tu intestino está en modo 'película de terror', es hora de pedir refuerzos",
-                    "🚑 Tu barriga no es una discoteca: si hace demasiado ruido, es señal de alarma",
-                    "⚡ Si el dolor es más intenso que un meme viral, busca ayuda profesional"
-                ],
-                general: [
-                    "¡Excelente pregunta! Tu intestino está orgulloso de tu curiosidad 🧠",
-                    "Me encanta cuando la gente pregunta sin miedo. ¡Así se aprende! 📚",
-                    "Tu pregunta demuestra que eres un experto en tu propio cuerpo 👏",
-                    "¡Bravo! Estás haciendo las preguntas que muchos se callan 🎉"
-                ]
-            },
-
-            // Chistes escatológicos (siempre con buen gusto)
-            jokes: [
-                "¿Sabes por qué los médicos usan estetoscopios? ¡Para escuchar los chismes del intestino! 🩺",
-                "¿Qué dijo el papel higiénico al inodoro? '¡Nos vemos en la próxima evacuación!' 🧻",
-                "¿Por qué los probióticos son tan populares? ¡Porque son las estrellas del reality show intestinal! 🌟",
-                "¿Qué le dice un intestino sano a uno enfermo? '¡Tú también puedes ser normal!' 💪"
-            ]
-        };
-
-        function addDoctorPersonality(reply, userMessage) {
-            const lowerMessage = userMessage.toLowerCase();
-            let enhancedReply = reply;
-
-            // Detectar el tipo de consulta
-            let category = 'general';
-            const keywords = {
-                sintomas: ['dolor', 'síntoma', 'malestar', 'molestia', 'cólico', 'ardor', 'náusea', 'vómito', 'fiebre', 'cansancio'],
-                tratamiento: ['medicamento', 'medicina', 'fármaco', 'tratamiento', 'terapia', 'dosis', 'inyección', 'infusión', 'pastilla'],
-                dieta: ['comida', 'alimento', 'dieta', 'nutrición', 'vitamina', 'suplemento', 'intolerancia', 'alergia', 'comer', 'ingerir'],
-                emergencia: ['urgencia', 'grave', 'crítico', 'sangrado', 'fuerte', 'intenso', 'inmediato', 'sos', 'ayuda']
-            };
-
-            for (const [cat, words] of Object.entries(keywords)) {
-                if (words.some(word => lowerMessage.includes(word))) {
-                    category = cat;
-                    break;
-                }
-            }
-
-            // Añadir solo UNA frase extra, con tacto según la categoría
-            if (category === 'emergencia' || category === 'sintomas') {
-                // Solo una respuesta personalizada, y catchphrase ocasional (no chistes)
-                if (doctorPersonality.responses[category] && Math.random() < 0.7) {
-                    const responses = doctorPersonality.responses[category];
-                    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-                    enhancedReply += `\n\n${randomResponse}`;
-                }
-                if (Math.random() < 0.2) {
-                    const catchphrase = doctorPersonality.catchphrases[Math.floor(Math.random() * doctorPersonality.catchphrases.length)];
-                    enhancedReply += `\n\n💭 ${catchphrase}`;
-                }
-                // No añadir chistes en emergencias/síntomas
-            } else {
-                // Para otras categorías, añadir catchphrase o chiste, pero solo uno
-                let extras = [];
-                if (Math.random() < 0.5) {
-                    const catchphrase = doctorPersonality.catchphrases[Math.floor(Math.random() * doctorPersonality.catchphrases.length)];
-                    extras.push(`💭 ${catchphrase}`);
-                } else if (Math.random() < 0.5) {
-                    const joke = doctorPersonality.jokes[Math.floor(Math.random() * doctorPersonality.jokes.length)];
-                    extras.push(`😄 ${joke}`);
-                }
-                if (doctorPersonality.responses[category] && Math.random() < 0.5) {
-                    const responses = doctorPersonality.responses[category];
-                    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-                    extras.unshift(randomResponse);
-                }
-                if (extras.length > 0) {
-                    enhancedReply += `\n\n${extras[0]}`; // Solo una frase extra
-                }
-            }
-
-            return enhancedReply;
-        }
-
-        sendButton.addEventListener("click", async () => {
-            const userMessage = userInput.value.trim();
-            if (!userMessage) return;
-
-            const timestamp = new Date().toLocaleString();
-            addMessageWithTimestamp(userMessage, "user", timestamp);
-            userInput.value = "";
-
-            const typingIndicator = await addTypingIndicator();
-
-            try {
-                const response = await fetch("https://flatus-webapp.onrender.com/chat", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ message: userMessage }),
-                });
-                const data = await response.json();
-
-                removeTypingIndicator(typingIndicator);
-
-                if (data.reply) {
-                    // Aplicar personalidad del Doctor Colóncio
-                    const personalizedReply = addDoctorPersonality(data.reply, userMessage);
-                    addMessageWithTimestamp(personalizedReply, "assistant", new Date().toLocaleString());
-                } else {
-                    const errorMessage = "¡Ups! Parece que mi cerebro digestivo tuvo un momento de 'estreñimiento mental'. 😅 Inténtalo de nuevo más tarde.";
-                    addMessageWithTimestamp(errorMessage, "assistant", new Date().toLocaleString());
-                }
-            } catch (error) {
-                removeTypingIndicator(typingIndicator);
-                const connectionError = "¡Oh no! Mi conexión intestinal está fallando. 🚽 Es como cuando el WiFi del baño no funciona. Inténtalo de nuevo.";
-                addMessageWithTimestamp(connectionError, "assistant", new Date().toLocaleString());
-            }
-        });
-
-        userInput.addEventListener("keypress", (event) => {
-            if (event.key === "Enter") {
-                sendButton.click();
-            }
-        });
-
-        function showWelcomeMessage() {
-            // Verificar si es la primera vez que se abre el chat
-            if (!localStorage.getItem("welcomeShown")) {
-                const welcomeMessage = "¡Hola! Soy el Doctor Colóncio, tu asistente especializado en EII. 🩺\n\n🚽 **Aviso importante:** Justo ahora estoy en el baño usando el papel higiénico. Dame 1 minuto para terminar y lavarme las manos, ¡luego responderé al instante!\n\n💭 \n\n¿En qué puedo ayudarte hoy?";
-
-                // Agregar el mensaje de bienvenida
-                addMessageWithTimestamp(welcomeMessage, "assistant", new Date().toLocaleString());
-
-                // Marcar que ya se mostró el mensaje de bienvenida
-                localStorage.setItem("welcomeShown", "true");
-            }
-        }
-
-        // Variables para el estado del servidor
-        let serverStatus = 'checking';
-        let responseTimes = [];
-        let lastResponseTime = 0;
-
-        function updateServerStatus(status, text) {
-            const statusDot = document.getElementById('status-dot');
-            const statusText = document.getElementById('status-text');
-
-            if (statusDot && statusText) {
-                statusDot.className = `status-dot ${status}`;
-                statusText.className = `status-text ${status}`;
-                statusText.textContent = text;
-            }
-        }
-
-        async function checkServerStatus() {
-            try {
-                const startTime = Date.now();
-                const response = await fetch("https://flatus-webapp.onrender.com/chat", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ message: "ping" }),
-                    signal: AbortSignal.timeout(5000) // 5 segundos timeout
-                });
-
-                const endTime = Date.now();
-                const responseTime = endTime - startTime;
-
-                if (response.ok) {
-                    responseTimes.push(responseTime);
-                    if (responseTimes.length > 10) responseTimes.shift(); // Mantener solo los últimos 10
-
-                    const avgResponseTime = Math.round(responseTimes.reduce((a, b) => a + b, 0) / responseTimes.length);
-                    lastResponseTime = avgResponseTime;
-
-                    if (responseTime < 2000) {
-                        updateServerStatus('online', `Activo (${avgResponseTime}ms)`);
-                    } else {
-                        updateServerStatus('waking', `Despertando (${avgResponseTime}ms)`);
+                        downloadFile(htmlContent, `chat_${new Date().toLocaleDateString().replace(/\//g, "-")}.html`, "text/html");
+                        closeExportMenu();
                     }
-                } else {
-                    updateServerStatus('offline', 'Error del servidor');
-                }
-            } catch (error) {
-                if (error.name === 'AbortError') {
-                    updateServerStatus('offline', 'Sin respuesta');
-                } else {
-                    updateServerStatus('offline', 'Error de conexión');
-                }
-            }
-        }
 
-        // Verificar estado del servidor cada 30 segundos
-        setInterval(checkServerStatus, 30000);
+                    function exportAsSummary() {
+                        const messages = exportMessages;
+                        const userMessages = messages.filter(msg => msg.role === 'Usuario');
+                        const categories = {};
 
-        window.onload = function () {
-            loadChatHistory();
-            showWelcomeMessage();
-            checkServerStatus(); // Verificar estado inicial
-            renderSuggestions(); // Inicializar sugerencias inteligentes
-        };
-    </script>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="assets/js/bs-init.js"></script>
-    <script src="assets/js/bold-and-bright.js"></script>
-    <script src="assets/js/Simple-Slider-swiper-bundle.min.js"></script>
-    <script src="assets/js/Simple-Slider.js"></script>
+                        userMessages.forEach(msg => {
+                            const category = msg.category;
+                            if (!categories[category]) categories[category] = [];
+                            categories[category].push(msg.content);
+                        });
+
+                        let summary = `RESUMEN DEL CHAT - Doctor Colóncio\n`;
+                        summary += `Fecha: ${new Date().toLocaleDateString()}\n`;
+                        summary += `Total de mensajes: ${messages.length}\n`;
+                        summary += `Mensajes del usuario: ${userMessages.length}\n\n`;
+
+                        summary += `CATEGORÍAS CONSULTADAS:\n`;
+                        for (const [category, contents] of Object.entries(categories)) {
+                            summary += `\n${category} (${contents.length} consultas):\n`;
+                            contents.forEach(content => {
+                                summary += `  • ${content}\n`;
+                            });
+                        }
+
+                        downloadFile(summary, `resumen_chat_${new Date().toLocaleDateString().replace(/\//g, "-")}.txt`, "text/plain");
+                        closeExportMenu();
+                    }
+
+                    function downloadFile(content, filename, mimeType) {
+                        const blob = new Blob([content], { type: mimeType });
+                        const link = document.createElement("a");
+                        link.href = URL.createObjectURL(blob);
+                        link.download = filename;
+                        link.click();
+                    }
+
+                    function closeExportMenu() {
+                        const menu = document.querySelector('.export-menu');
+                        if (menu) menu.remove();
+                    }
+
+                    function renderEmojis() {
+                        twemoji.parse(chatContainer);
+                    }
+
+                    // Event listener para el botón de tema (solo si existe)
+                    if (toggleButton) {
+                        toggleButton.addEventListener("click", () => {
+                            document.body.classList.toggle("dark-mode");
+                        });
+                    }
+
+                    // Personalidad del Doctor Colóncio - Sistema de respuestas inteligentes
+                    const doctorPersonality = {
+                        // Chistes y frases características
+                        catchphrases: [
+                            "¡La caca no es tabú, es biología con ritmo! 🎵",
+                            "Si el intestino habla, hay que escucharlo 👂",
+                            "Educar es evacuar prejuicios 💩",
+                            "La ciencia entra mejor con una sonrisa 😄",
+                            "Cada intestino es un universo. ¡Explóralo sin miedo! 🌌",
+                            "El baño es un templo. Respétalo 🏛️",
+                            "Tabucio se alimenta del silencio. Yo, de la verdad! 🗣️",
+                            "No hay pregunta tonta, solo intestinos tímidos 🤫",
+                            "Si no te ríes de tu digestión, ella se reirá de ti 😂"
+                        ],
+
+                        // Respuestas para diferentes tipos de consultas
+                        responses: {
+                            sintomas: [
+                                "¡Ajá! Tu intestino está haciendo gimnasia sin avisar 🏃‍♂️",
+                                "Mira, si tu barriga suena como una orquesta, es que algo está pasando 🎼",
+                                "Cuando el dolor dice 'hola', hay que responderle con respeto 😤",
+                                "Tu estómago es como un GPS: cuando se pierde, te avisa con señales claras 🗺️",
+                                "Si tu barriga fuera un teléfono, estaría en modo vibración constante 📱"
+                            ],
+                            tratamiento: [
+                                "Los medicamentos son como amigos que vienen a ayudarte, pero hay que tratarlos bien 💊",
+                                "Si tu tratamiento fuera un restaurante, ¿qué estrella Michelin le darías? ⭐",
+                                "La medicación es como el papel higiénico: mejor tener de sobra 📜",
+                                "Tu tratamiento es como un plan de entrenamiento: constancia es la clave 🎯",
+                                "Los medicamentos son como superhéroes: cada uno tiene su poder especial 🦸‍♂️"
+                            ],
+                            dieta: [
+                                "La comida es como el combustible de tu nave espacial intestinal 🚀",
+                                "Algunos alimentos son como invitados problemáticos en tu fiesta digestiva 🎉",
+                                "Tu dieta es como un jardín: hay que regarla con conocimiento 🌱",
+                                "Los alimentos son como actores: algunos son protagonistas, otros son villanos 🎭",
+                                "Tu intestino es como un crítico gastronómico muy exigente 👨‍🍳"
+                            ],
+                            emergencia: [
+                                "🚨 ¡ALTO! Si tu barriga hace más ruido que un concierto de rock, llama al médico YA!",
+                                "⚠️ Cuando el dolor dice '¡SOS!', no le hagas caso omiso",
+                                "📞 Si tu intestino está en modo 'película de terror', es hora de pedir refuerzos",
+                                "🚑 Tu barriga no es una discoteca: si hace demasiado ruido, es señal de alarma",
+                                "⚡ Si el dolor es más intenso que un meme viral, busca ayuda profesional"
+                            ],
+                            general: [
+                                "¡Excelente pregunta! Tu intestino está orgulloso de tu curiosidad 🧠",
+                                "Me encanta cuando la gente pregunta sin miedo. ¡Así se aprende! 📚",
+                                "Tu pregunta demuestra que eres un experto en tu propio cuerpo 👏",
+                                "¡Bravo! Estás haciendo las preguntas que muchos se callan 🎉"
+                            ]
+                        },
+
+                        // Chistes escatológicos (siempre con buen gusto)
+                        jokes: [
+                            "¿Sabes por qué los médicos usan estetoscopios? ¡Para escuchar los chismes del intestino! 🩺",
+                            "¿Qué dijo el papel higiénico al inodoro? '¡Nos vemos en la próxima evacuación!' 🧻",
+                            "¿Por qué los probióticos son tan populares? ¡Porque son las estrellas del reality show intestinal! 🌟",
+                            "¿Qué le dice un intestino sano a uno enfermo? '¡Tú también puedes ser normal!' 💪"
+                        ]
+                    };
+
+                    function addDoctorPersonality(reply, userMessage) {
+                        const lowerMessage = userMessage.toLowerCase();
+                        let enhancedReply = reply;
+
+                        // Detectar el tipo de consulta
+                        let category = 'general';
+                        const keywords = {
+                            sintomas: ['dolor', 'síntoma', 'malestar', 'molestia', 'cólico', 'ardor', 'náusea', 'vómito', 'fiebre', 'cansancio'],
+                            tratamiento: ['medicamento', 'medicina', 'fármaco', 'tratamiento', 'terapia', 'dosis', 'inyección', 'infusión', 'pastilla'],
+                            dieta: ['comida', 'alimento', 'dieta', 'nutrición', 'vitamina', 'suplemento', 'intolerancia', 'alergia', 'comer', 'ingerir'],
+                            emergencia: ['urgencia', 'grave', 'crítico', 'sangrado', 'fuerte', 'intenso', 'inmediato', 'sos', 'ayuda']
+                        };
+
+                        for (const [cat, words] of Object.entries(keywords)) {
+                            if (words.some(word => lowerMessage.includes(word))) {
+                                category = cat;
+                                break;
+                            }
+                        }
+
+                        // Añadir solo UNA frase extra, con tacto según la categoría
+                        if (category === 'emergencia' || category === 'sintomas') {
+                            // Solo una respuesta personalizada, y catchphrase ocasional (no chistes)
+                            if (doctorPersonality.responses[category] && Math.random() < 0.7) {
+                                const responses = doctorPersonality.responses[category];
+                                const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                                enhancedReply += `\n\n${randomResponse}`;
+                            }
+                            if (Math.random() < 0.2) {
+                                const catchphrase = doctorPersonality.catchphrases[Math.floor(Math.random() * doctorPersonality.catchphrases.length)];
+                                enhancedReply += `\n\n💭 ${catchphrase}`;
+                            }
+                            // No añadir chistes en emergencias/síntomas
+                        } else {
+                            // Para otras categorías, añadir catchphrase o chiste, pero solo uno
+                            let extras = [];
+                            if (Math.random() < 0.5) {
+                                const catchphrase = doctorPersonality.catchphrases[Math.floor(Math.random() * doctorPersonality.catchphrases.length)];
+                                extras.push(`💭 ${catchphrase}`);
+                            } else if (Math.random() < 0.5) {
+                                const joke = doctorPersonality.jokes[Math.floor(Math.random() * doctorPersonality.jokes.length)];
+                                extras.push(`😄 ${joke}`);
+                            }
+                            if (doctorPersonality.responses[category] && Math.random() < 0.5) {
+                                const responses = doctorPersonality.responses[category];
+                                const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                                extras.unshift(randomResponse);
+                            }
+                            if (extras.length > 0) {
+                                enhancedReply += `\n\n${extras[0]}`; // Solo una frase extra
+                            }
+                        }
+
+                        return enhancedReply;
+                    }
+
+                    sendButton.addEventListener("click", async () => {
+                        const userMessage = userInput.value.trim();
+                        if (!userMessage) return;
+
+                        const timestamp = new Date().toLocaleString();
+                        addMessageWithTimestamp(userMessage, "user", timestamp);
+                        userInput.value = "";
+
+                        const typingIndicator = await addTypingIndicator();
+
+                        try {
+                            const response = await fetch("https://flatus-webapp.onrender.com/chat", {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify({ message: userMessage }),
+                            });
+                            const data = await response.json();
+
+                            removeTypingIndicator(typingIndicator);
+
+                            if (data.reply) {
+                                // Aplicar personalidad del Doctor Colóncio
+                                const personalizedReply = addDoctorPersonality(data.reply, userMessage);
+                                addMessageWithTimestamp(personalizedReply, "assistant", new Date().toLocaleString());
+                            } else {
+                                const errorMessage = "¡Ups! Parece que mi cerebro digestivo tuvo un momento de 'estreñimiento mental'. 😅 Inténtalo de nuevo más tarde.";
+                                addMessageWithTimestamp(errorMessage, "assistant", new Date().toLocaleString());
+                            }
+                        } catch (error) {
+                            removeTypingIndicator(typingIndicator);
+                            const connectionError = "¡Oh no! Mi conexión intestinal está fallando. 🚽 Es como cuando el WiFi del baño no funciona. Inténtalo de nuevo.";
+                            addMessageWithTimestamp(connectionError, "assistant", new Date().toLocaleString());
+                        }
+                    });
+
+                    userInput.addEventListener("keypress", (event) => {
+                        if (event.key === "Enter") {
+                            sendButton.click();
+                        }
+                    });
+
+                    function showWelcomeMessage() {
+                        // Verificar si es la primera vez que se abre el chat
+                        if (!localStorage.getItem("welcomeShown")) {
+                            const welcomeMessage = "¡Hola! Soy el Doctor Colóncio, tu asistente especializado en EII. 🩺\n\n🚽 **Aviso importante:** Justo ahora estoy en el baño usando el papel higiénico. Dame 1 minuto para terminar y lavarme las manos, ¡luego responderé al instante!\n\n💭 \n\n¿En qué puedo ayudarte hoy?";
+
+                            // Agregar el mensaje de bienvenida
+                            addMessageWithTimestamp(welcomeMessage, "assistant", new Date().toLocaleString());
+
+                            // Marcar que ya se mostró el mensaje de bienvenida
+                            localStorage.setItem("welcomeShown", "true");
+                        }
+                    }
+
+                    // Variables para el estado del servidor
+                    let serverStatus = 'checking';
+                    let responseTimes = [];
+                    let lastResponseTime = 0;
+
+                    function updateServerStatus(status, text) {
+                        const statusDot = document.getElementById('status-dot');
+                        const statusText = document.getElementById('status-text');
+
+                        if (statusDot && statusText) {
+                            statusDot.className = `status-dot ${status}`;
+                            statusText.className = `status-text ${status}`;
+                            statusText.textContent = text;
+                        }
+                    }
+
+                    async function checkServerStatus() {
+                        try {
+                            const startTime = Date.now();
+                            const response = await fetch("https://flatus-webapp.onrender.com/chat", {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify({ message: "ping" }),
+                                signal: AbortSignal.timeout(5000) // 5 segundos timeout
+                            });
+
+                            const endTime = Date.now();
+                            const responseTime = endTime - startTime;
+
+                            if (response.ok) {
+                                responseTimes.push(responseTime);
+                                if (responseTimes.length > 10) responseTimes.shift(); // Mantener solo los últimos 10
+
+                                const avgResponseTime = Math.round(responseTimes.reduce((a, b) => a + b, 0) / responseTimes.length);
+                                lastResponseTime = avgResponseTime;
+
+                                if (responseTime < 2000) {
+                                    updateServerStatus('online', `Activo (${avgResponseTime}ms)`);
+                                } else {
+                                    updateServerStatus('waking', `Despertando (${avgResponseTime}ms)`);
+                                }
+                            } else {
+                                updateServerStatus('offline', 'Error del servidor');
+                            }
+                        } catch (error) {
+                            if (error.name === 'AbortError') {
+                                updateServerStatus('offline', 'Sin respuesta');
+                            } else {
+                                updateServerStatus('offline', 'Error de conexión');
+                            }
+                        }
+                    }
+
+                    // Verificar estado del servidor cada 30 segundos
+                    setInterval(checkServerStatus, 30000);
+
+                    window.onload = function () {
+                        loadChatHistory();
+                        showWelcomeMessage();
+                        checkServerStatus(); // Verificar estado inicial
+                        renderSuggestions(); // Inicializar sugerencias inteligentes
+                    };
+                </script>
+                <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+                <script src="assets/js/bs-init.js"></script>
+                <script src="assets/js/bold-and-bright.js"></script>
+                <script src="assets/js/Simple-Slider-swiper-bundle.min.js"></script>
+                <script src="assets/js/Simple-Slider.js"></script>
 </body>
 
 </html>
