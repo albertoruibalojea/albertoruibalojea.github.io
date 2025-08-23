@@ -30,6 +30,7 @@
             min-height: 0;
             height: 100vh;
             overflow: hidden;
+            position: relative;
         }
 
         #chat-section {
@@ -37,7 +38,9 @@
             display: flex;
             flex-direction: column;
             min-height: 0;
-            height: 100%;
+            height: calc(100vh - 80px - 70px);
+            /* 70px es la altura estimada del input, 80px el margen inferior */
+            margin-bottom: 0;
         }
 
         #chat-container {
@@ -46,8 +49,6 @@
             padding: 10px;
             margin-bottom: 0;
             height: 100%;
-            padding-bottom: 80px;
-            /* Ajusta según la altura real del input */
             box-sizing: border-box;
         }
 
@@ -60,7 +61,8 @@
             position: fixed;
             left: 0;
             right: 0;
-            bottom: 0;
+            bottom: 80px;
+            /* deja 80px de margen inferior */
             background: white;
             z-index: 1000;
         }
@@ -122,11 +124,14 @@
             margin-right: 0;
             display: inline-block;
             text-align: right;
-            width: 100%;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
         }
 
         .message.assistant {
-            background-color: #6e619c;
+            background-color: #978bc4;
             color: black;
             align-self: flex-start;
             text-align: left;
