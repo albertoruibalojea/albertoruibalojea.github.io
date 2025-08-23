@@ -39,6 +39,8 @@
             flex-direction: column;
             min-height: 0;
             height: calc(100vh - 80px - 70px);
+            /* 70px = altura del input, 80px = margen inferior */
+            max-height: calc(100vh - 80px - 70px);
             /* 70px es la altura estimada del input, 80px el margen inferior */
             margin-bottom: 0;
         }
@@ -48,7 +50,9 @@
             overflow-y: auto;
             padding: 10px;
             margin-bottom: 0;
-            height: 100%;
+            height: calc(100vh - 80px - 70px);
+            /* 70px = altura del input, 80px = margen inferior */
+            max-height: calc(100vh - 80px - 70px);
             box-sizing: border-box;
         }
 
@@ -1237,6 +1241,27 @@
                         renderSuggestions(); // Inicializar sugerencias inteligentes
                     };
                 </script>
+
+
+                <script>
+                    function adjustChatHeight() {
+                        const inputSection = document.getElementById('input-section');
+                        const chatSection = document.getElementById('chat-section');
+                        const chatContainer = document.getElementById('chat-container');
+                        if (inputSection && chatSection && chatContainer) {
+                            const inputHeight = inputSection.offsetHeight;
+                            const bottomMargin = 80;
+                            const vh = window.innerHeight;
+                            const chatHeight = vh - inputHeight - bottomMargin;
+                            chatSection.style.height = chatHeight + 'px';
+                            chatContainer.style.height = chatHeight + 'px';
+                            chatContainer.style.maxHeight = chatHeight + 'px';
+                        }
+                    }
+                    window.addEventListener('resize', adjustChatHeight);
+                    window.addEventListener('DOMContentLoaded', adjustChatHeight);
+                </script>
+
                 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
                 <script src="assets/js/bs-init.js"></script>
                 <script src="assets/js/bold-and-bright.js"></script>
