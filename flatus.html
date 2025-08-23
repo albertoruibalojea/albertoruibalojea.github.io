@@ -281,18 +281,23 @@
 
         .message {
             position: relative;
-            font-size: 1.1rem; /* Aumenta el tamaño de letra */
-            word-break: break-word; /* Evita que el texto se salga de la burbuja */
-            white-space: pre-line;  /* Respeta saltos de línea */
-            max-width: 95vw;        /* Mejor para móviles */
+            font-size: 1.1rem;
+            /* Aumenta el tamaño de letra */
+            word-break: break-word;
+            /* Evita que el texto se salga de la burbuja */
+            white-space: pre-line;
+            /* Respeta saltos de línea */
+            max-width: 95vw;
+            /* Mejor para móviles */
         }
-        
+
         @media (max-width: 600px) {
             .message {
                 font-size: 1.2rem;
                 padding: 12px 10px;
                 max-width: 98vw;
             }
+
             #input-container input {
                 font-size: 1.1rem;
             }
@@ -1090,7 +1095,7 @@
             const lowerMessage = userMessage.toLowerCase();
             let enhancedReply = reply;
 
-            // Detectar el tipo de consulta con más precisión
+            // Detectar el tipo de consulta
             let category = 'general';
             const keywords = {
                 sintomas: ['dolor', 'síntoma', 'malestar', 'molestia', 'cólico', 'ardor', 'náusea', 'vómito', 'fiebre', 'cansancio'],
@@ -1106,27 +1111,37 @@
                 }
             }
 
-            // Agregar personalidad del doctor (siempre para emergencias, ocasional para el resto)
-            if (category === 'emergencia' || Math.random() < 0.7) {
-                if (doctorPersonality.responses[category]) {
+            // Añadir solo UNA frase extra, con tacto según la categoría
+            if (category === 'emergencia' || category === 'sintomas') {
+                // Solo una respuesta personalizada, y catchphrase ocasional (no chistes)
+                if (doctorPersonality.responses[category] && Math.random() < 0.7) {
                     const responses = doctorPersonality.responses[category];
                     const randomResponse = responses[Math.floor(Math.random() * responses.length)];
                     enhancedReply += `\n\n${randomResponse}`;
                 }
-            }
-
-            // Agregar catchphrase ocasional (más frecuente para emergencias)
-            const catchphraseChance = category === 'emergencia' ? 0.8 : 0.4;
-            if (Math.random() < catchphraseChance) {
-                const catchphrase = doctorPersonality.catchphrases[Math.floor(Math.random() * doctorPersonality.catchphrases.length)];
-                enhancedReply += `\n\n💭 ${catchphrase}`;
-            }
-
-            // Agregar chiste ocasional (menos frecuente para emergencias)
-            const jokeChance = category === 'emergencia' ? 0.1 : 0.3;
-            if (Math.random() < jokeChance) {
-                const joke = doctorPersonality.jokes[Math.floor(Math.random() * doctorPersonality.jokes.length)];
-                enhancedReply += `\n\n😄 ${joke}`;
+                if (Math.random() < 0.2) {
+                    const catchphrase = doctorPersonality.catchphrases[Math.floor(Math.random() * doctorPersonality.catchphrases.length)];
+                    enhancedReply += `\n\n💭 ${catchphrase}`;
+                }
+                // No añadir chistes en emergencias/síntomas
+            } else {
+                // Para otras categorías, añadir catchphrase o chiste, pero solo uno
+                let extras = [];
+                if (Math.random() < 0.5) {
+                    const catchphrase = doctorPersonality.catchphrases[Math.floor(Math.random() * doctorPersonality.catchphrases.length)];
+                    extras.push(`💭 ${catchphrase}`);
+                } else if (Math.random() < 0.5) {
+                    const joke = doctorPersonality.jokes[Math.floor(Math.random() * doctorPersonality.jokes.length)];
+                    extras.push(`😄 ${joke}`);
+                }
+                if (doctorPersonality.responses[category] && Math.random() < 0.5) {
+                    const responses = doctorPersonality.responses[category];
+                    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                    extras.unshift(randomResponse);
+                }
+                if (extras.length > 0) {
+                    enhancedReply += `\n\n${extras[0]}`; // Solo una frase extra
+                }
             }
 
             return enhancedReply;
