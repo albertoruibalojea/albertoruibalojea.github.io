@@ -495,6 +495,13 @@
             background-color: #bb4b6c;
             color: white;
         }
+
+        /* Ajusta el tamaño de los emojis al tamaño de letra */
+        .emoji {
+            width: 0.8rem;
+            height: 0.8rem;
+            font-size: 0.8rem;
+        }
     </style>
 </head>
 
@@ -656,9 +663,9 @@
                     ]
                 },
                 emergencia: [
-                    '⚠️ ¿Qué síntomas requieren atención médica inmediata?',
-                    '🚨 ¿Cuándo debo ir a urgencias?',
-                    '📞 ¿Cómo sé si necesito llamar al médico?'
+                    '¿Qué síntomas requieren atención médica inmediata?',
+                    '¿Cuándo debo ir a urgencias?',
+                    '¿Cómo sé si necesito llamar al médico?'
                 ]
             };
 
@@ -668,6 +675,10 @@
                 '¿Cuáles son los síntomas más frecuentes en una EII?',
                 '¿Cómo se diagnostica una EII?'
             ];
+
+            function wrapEmojis(text) {
+                return text.replace(/([\u{1F300}-\u{1FAFF}])/gu, '<span class="emoji">$1</span>');
+            }
 
             function analyzeChatContext() {
                 const messages = Array.from(chatContainer.children);
@@ -855,6 +866,17 @@
                     'general': '💬 General'
                 };
                 return labels[category] || '💬 General';
+
+                const container = document.getElementById("labels");
+
+                doctorPersonality.catchphrases.forEach(phrase => {
+                    // Reemplaza el emoji con un span
+                    const modified = phrase.replace(/([\u{1F300}-\u{1FAFF}])/gu, '<span class="emoji">$1</span>');
+                    const p = document.createElement("p");
+                    p.innerHTML = modified;
+                    container.appendChild(p);
+                });
+
             }
 
             // ...existing code...
@@ -1078,6 +1100,41 @@
                 ]
             };
 
+            const container = document.getElementById("output");
+
+            function renderPersonality(obj) {
+                for (const key in obj) {
+                    const section = document.createElement("div");
+                    section.innerHTML = `<h3>${key}</h3>`;
+
+                    if (Array.isArray(obj[key])) {
+                        obj[key].forEach(text => {
+                            const p = document.createElement("p");
+                            p.innerHTML = wrapEmojis(text);
+                            section.appendChild(p);
+                        });
+                    } else if (typeof obj[key] === "object") {
+                        for (const subKey in obj[key]) {
+                            const subSection = document.createElement("div");
+                            subSection.innerHTML = `<h4>${subKey}</h4>`;
+                            obj[key][subKey].forEach(text => {
+                                const p = document.createElement("p");
+                                p.innerHTML = wrapEmojis(text);
+                                subSection.appendChild(p);
+                            });
+                            section.appendChild(subSection);
+                        }
+                    }
+
+                    container.appendChild(section);
+                }
+            }
+
+            renderPersonality(doctorPersonality);
+
+
+
+
             function addDoctorPersonality(reply, userMessage) {
                 const lowerMessage = userMessage.toLowerCase();
                 let enhancedReply = reply;
@@ -1155,16 +1212,19 @@
                     removeTypingIndicator(typingIndicator);
 
                     if (data.reply) {
+                        // Reemplaza "Flatus" por "Doctor Colóncio" en la respuesta
+                        let reply = data.reply.replace(/Flatus/g, "Doctor Colóncio");
+
                         // Aplicar personalidad del Doctor Colóncio
                         const personalizedReply = addDoctorPersonality(data.reply, userMessage);
                         addMessageWithTimestamp(personalizedReply, "assistant", new Date().toLocaleString());
                     } else {
-                        const errorMessage = "¡Ups! Parece que mi cerebro digestivo tuvo un momento de 'estreñimiento mental'. 😅 Inténtalo de nuevo más tarde.";
+                        const errorMessage = "¡Ups! Parece que mi cerebro digestivo tuvo un momento de 'estreñimiento mental'. Inténtalo de nuevo más tarde.";
                         addMessageWithTimestamp(errorMessage, "assistant", new Date().toLocaleString());
                     }
                 } catch (error) {
                     removeTypingIndicator(typingIndicator);
-                    const connectionError = "¡Oh no! Mi conexión intestinal está fallando. 🚽 Es como cuando el WiFi del baño no funciona. Inténtalo de nuevo.";
+                    const connectionError = "¡Oh no! Mi conexión intestinal está fallando. Es como cuando el WiFi del baño no funciona. Inténtalo de nuevo.";
                     addMessageWithTimestamp(connectionError, "assistant", new Date().toLocaleString());
                 }
             });
@@ -1177,7 +1237,8 @@
 
             function showWelcomeMessage() {
                 const welcomeMessage = "¡Hola! Soy el Doctor Colóncio, tu asistente especializado en EII. 🩺\n\n🚽 **Aviso importante:** Justo ahora estoy en el baño usando el papel higiénico. Dame 1 minuto para terminar y lavarme las manos, ¡luego responderé al instante!\n\n💭 \n\n¿En qué puedo ayudarte hoy?";
-                addMessageWithTimestamp(welcomeMessage, "assistant", new Date().toLocaleString());
+                const styledMessage = wrapEmojis(welcomeMessage);
+                addMessageWithTimestamp(styledMessage, "assistant", new Date().toLocaleString());
             }
 
             // Variables para el estado del servidor
