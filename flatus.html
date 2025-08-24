@@ -1176,16 +1176,8 @@
             });
 
             function showWelcomeMessage() {
-                // Verificar si es la primera vez que se abre el chat
-                if (!localStorage.getItem("welcomeShown")) {
-                    const welcomeMessage = "¡Hola! Soy el Doctor Colóncio, tu asistente especializado en EII. 🩺\n\n🚽 **Aviso importante:** Justo ahora estoy en el baño usando el papel higiénico. Dame 1 minuto para terminar y lavarme las manos, ¡luego responderé al instante!\n\n💭 \n\n¿En qué puedo ayudarte hoy?";
-
-                    // Agregar el mensaje de bienvenida
-                    addMessageWithTimestamp(welcomeMessage, "assistant", new Date().toLocaleString());
-
-                    // Marcar que ya se mostró el mensaje de bienvenida
-                    localStorage.setItem("welcomeShown", "true");
-                }
+                const welcomeMessage = "¡Hola! Soy el Doctor Colóncio, tu asistente especializado en EII. 🩺\n\n🚽 **Aviso importante:** Justo ahora estoy en el baño usando el papel higiénico. Dame 1 minuto para terminar y lavarme las manos, ¡luego responderé al instante!\n\n💭 \n\n¿En qué puedo ayudarte hoy?";
+                addMessageWithTimestamp(welcomeMessage, "assistant", new Date().toLocaleString());
             }
 
             // Variables para el estado del servidor
