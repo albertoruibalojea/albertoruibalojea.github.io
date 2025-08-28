@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <title>Login - Asistente EII</title>
+  <link rel="icon" type="image/png" href="assets/img/brands/logo_transparente.png">
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,600,700,800&display=swap">
+  <link rel="stylesheet" href="assets/css/bs-theme-overrides.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-md sticky-top navbar-shrink py-3 navbar-light" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="/">
+        <span><img src="assets/img/brands/logo_transparente.png" style="width: 64px;height: 64px;">Asistente EII</span>
+      </a>
+      <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-2">
+        <span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navcol-2">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="eiis.html">Las EIIs</a></li>
+          <li class="nav-item"><a class="nav-link" href="projects.html">El Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="asistente_eii.html">La APP</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Login Form -->
+  <section class="py-5">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+          <div class="card shadow border-0">
+            <div class="card-body p-4">
+              <h4 class="text-center mb-4">Accede a tu cuenta</h4>
+              <div class="mb-3">
+                <label for="email" class="form-label">Correo electrónico</label>
+                <input id="email" type="email" class="form-control" placeholder="tu@email.com" required>
+              </div>
+              <div class="mb-3">
+                <label for="password" class="form-label">Contraseña</label>
+                <input id="password" type="password" class="form-control" placeholder="••••••••" required>
+              </div>
+              <div class="d-grid mb-3">
+                <button class="btn btn-primary" onclick="login()">Iniciar sesión</button>
+              </div>
+              <p class="text-muted">Si no tienes una cuenta, créala desde la App.</p>
+              <!--<div class="d-grid">
+                <button class="btn btn-outline-primary" onclick="registrar()">Registrarse</button>
+              </div>-->
+              <div id="msg" class="mt-3 text-center text-danger"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-primary-gradient">
+    <div class="container py-4 py-lg-5">
+      <!-- igual que en tu plantilla -->
+    </div>
+  </footer>
+
+  <!-- Scripts Bootstrap -->
+  <script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script>
+    // Configuración de Firebase
+    var firebaseConfig = {
+        apiKey: "AIzaSyB-8935XhLufIx8E-xqKoRzC5b4KUh4DAQ",
+        authDomain: "cron-d3463.firebaseapp.com",
+        projectId: "cron-d3463",
+        storageBucket: "cron-d3463.firebasestorage.app",
+        messagingSenderId: "303808058544",
+        appId: "1:303808058544:web:a1f1f868d8fa823f695775",
+        measurementId: "G-R14FTBJWH3"
+};
+    firebase.initializeApp(firebaseConfig);
+
+    function login() {
+      const email = document.getElementById('email').value;
+      const pass = document.getElementById('password').value;
+      firebase.auth().signInWithEmailAndPassword(email, pass)
+        .then(user => { window.location.href = "premium.html"; })
+        .catch(err => { document.getElementById('msg').innerText = err.message; });
+    }
+
+    function registrar() {
+      const email = document.getElementById('email').value;
+      const pass = document.getElementById('password').value;
+      firebase.auth().createUserWithEmailAndPassword(email, pass)
+        .then(user => { document.getElementById('msg').innerText = "Registro exitoso. Ahora puedes iniciar sesión."; })
+        .catch(err => { document.getElementById('msg').innerText = err.message; });
+    }
+  </script>
+</body>
+</html>
