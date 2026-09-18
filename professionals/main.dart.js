@@ -91769,25 +91769,25 @@ return A.d([p,o,n,A.iF(A.a7(A.d([A.at(B.ii,m,s,s,16),A.i(s,10,10),A.L("Eliminar"
 $S:64}
 A.a7Q.prototype={
 dW(){return A.cEe("",null,"","",!1,B.jy,"","",B.jy,6)},
-Xo(){var s=0,r=A.y(t.H),q,p=this,o,n,m,l,k,j
+Xo(){var s=0,r=A.y(t.H),q,p=this,o,n,m,l,k,j,i
 var $async$Xo=A.u(function(a,b){if(a===1)return A.v(b,r)
-for(;;)switch(s){case 0:j=p.a
-j===$&&A.c()
-o=j.V(0,$.c3(),t.c)
+for(;;)switch(s){case 0:i=p.a
+i===$&&A.c()
+o=i.V(0,$.c3(),t.c)
 n=o.e
 m=n==null?null:B.c.A(n.Q)
 if(m==null)m=""
 l=p.aKr(o.d,m)
-if(l==null){p.gi().p(0)
-j=p.gi().gm()
-j=j.N5(m.length===0?"Configura un campo de tipo location en el esquema para usar la vista mapa":"El campo de ubicaci\xf3n '"+m+"' no existe o no es de tipo location")
-p.gi().v(j)
+if(m.length!==0)k=m
+else{i=l==null?null:l.c
+k=i==null?"":i}if(k.length===0){p.gi().p(0)
+i=p.gi().gm().N5("Configura el campo de ubicaci\xf3n del mapa o un campo de tipo location en el esquema")
+p.gi().v(i)
 s=1
-break}k=p.bsT(l)
-j=l.c
+break}j=p.bsT(k,l)
 p.gi().p(0)
-j=p.gi().gm().bzQ(k,j+".geohash","",j)
-p.gi().v(j)
+i=p.gi().gm().bzQ(j,k+".geohash","",k)
+p.gi().v(i)
 case 1:return A.w(q,r)}})
 return A.x($async$Xo,r)},
 Iw(a,b,c,d){return this.bHE(a,b,c,d)},
@@ -91966,11 +91966,9 @@ aKr(a,b){var s,r,q
 if(b.length!==0){for(s=a.length,r=0;r<s;++r){q=a[r]
 if(q.c===b&&q.e===B.jk)return q}return null}for(s=a.length,r=0;r<s;++r){q=a[r]
 if(q.e===B.jk)return q}return null},
-bsT(a){var s,r=B.c.A(a.d)
-if(r.length!==0)return r
-s=a.c
-if(B.c.A(s)==="location")return"address"
-if(B.c.eT(s,".location"))return B.c.aa(s,0,s.length-9)+".address"
+bsT(a,b){if(b!=null&&B.c.A(b.d).length!==0)return B.c.A(b.d)
+if(B.c.A(a)==="location")return"address"
+if(B.c.eT(a,".location"))return B.c.aa(a,0,a.length-9)+".address"
 return"address"},
 aL1(a){if(a<5)return 3
 if(a<7)return 4
